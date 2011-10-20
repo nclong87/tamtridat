@@ -184,18 +184,6 @@ class AccountController extends VanillaController {
 				$this->account->id = $account[0]['account']['id'];
 				$this->account->lastlogin = GetDateSQL();
 				$this->account->save();
-				$this->setModel('nhathau');
-				$this->nhathau->where('and status>=0 and account_id='.$account[0]['account']['id']);
-				$nhathau = $this->nhathau->search('id,displayname,account_id,diemdanhgia,nhathau_alias');
-				if(!empty($nhathau))
-					$_SESSION['nhathau'] = $nhathau[0]['nhathau'];
-				$this->setModel('duan');
-				$this->duan->where(' and account_id='.$account[0]['account']['id']);
-				$data = $this->duan->search('id');
-				$myprojects = array();
-				foreach($data as $duan)
-					array_push($myprojects,$duan['duan']['id']);
-				$_SESSION['myprojects'] = $myprojects;	
 				redirect($url);
 			}
 		}

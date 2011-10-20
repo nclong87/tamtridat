@@ -48,7 +48,7 @@ class AdminController extends VanillaController {
 	function viewAdminPage() {
 		$this->checkAdmin(false);
 		$this->setModel("menu");
-		$this->menu->orderBy('order','ASC');
+		$this->menu->orderBy('`order`','ASC');
 		$lstMenus = $this->menu->search();
 		$this->set("lstMenus",$lstMenus);
 		$this->_template->renderAdminPage(); 

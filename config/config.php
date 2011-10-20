@@ -5,13 +5,13 @@ ini_set('session.cookie_lifetime',10);
 define ('DEVELOPMENT_ENVIRONMENT',true);
 
 
-define('DB_NAME', 'cms');
+define('DB_NAME', 'tamtridat');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
 
-define('BASE_PATH','http://localhost/mycms');
-define('SITE_NAME','My CMS');
+define('BASE_PATH','http://localhost/tamtridat');
+define('SITE_NAME','Tam Tri Dat');
 define('PINGBOX','wid=hlrqrgS1QG6c0M2LmECPawfh');
 define('MAX_FILEDOWNLOADS',30);
 define('MAX_SENDACTIVECODE',3);
