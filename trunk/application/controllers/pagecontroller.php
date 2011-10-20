@@ -45,7 +45,25 @@ class PageController extends VanillaController {
 		}
 		$this->_template->render();
 	}
+	function form($id=null) {
+		$this->checkAdmin(false);
+		if($id != null && $id != 0) {
+			$this->page->id=$id;
+            $page=$this->page->search();
+			$this->setModel("menu");
+			$this->menu->orderBy('`order`','ASC');
+			$lstMenus = $this->menu->search();
+			$this->set("lstMenus",$lstMenus);
+			$this->set("id",isset($page['page'])?$page['page']['id']:'');
+			$this->set("title",isset($page['page'])?$page['page']['title']:'');
+			$this->set("alias",isset($page['page'])?$page['page']['alias']:'');
+			$this->set("menu_id",isset($page['page'])?$page['page']['menu_id']:'');
+			$this->set("content",isset($page['page'])?$page['page']['content']:'');
+		}
+		$this->_template->renderPage();
+	}
 	function getContentById($id=null) {	
+		
 		if($id != null && $id != 0) {
 			$this->page->id=$id;
             $page=$this->page->search();

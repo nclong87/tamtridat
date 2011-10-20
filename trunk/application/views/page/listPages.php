@@ -40,7 +40,7 @@
 				<td id="td_id" style="display:none;"><?php echo $page["page"]["id"]?></td>
 				<td id="td_alias" style="display:none;"><?php echo $page["page"]["alias"]?></td>
 				<td align="center">
-					<input type="button" onclick="select_row(this)" value="Chọn" />
+					<img style="cursor:pointer" onclick="doEdit(<?php echo $page["page"]["id"]?>)" title="Chỉnh sửa" alt="edit" src="<?php echo BASE_PATH ?>/public/images/icons/edit.png"/>
 				</td>
 			</tr>
 			<?php
