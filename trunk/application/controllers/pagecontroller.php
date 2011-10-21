@@ -48,8 +48,8 @@ class PageController extends VanillaController {
 	function form($id=null) {
 		$this->checkAdmin(false);
 		if($id != null && $id != 0) {
-			$arr = array('a' => '20/1/2001', 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
-			die(json_encode($arr));
+			//$arr = array('a' => '20/1/2001', 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+			//die(json_encode($arr));
 			$this->page->id=$id;
             $page=$this->page->search();
 			$this->setModel("menu");
@@ -72,12 +72,22 @@ class PageController extends VanillaController {
 			print_r($page['page']['content']);
 		}
 	}
-    function listPages($ajax) {
+    function listPages() {
 		$this->checkAdmin(true);
-		$query = "SELECT id,alias,title,datemodified,usermodified,menu_id,active FROM `pages` as `page` WHERE '1'='1' ORDER BY `page`.`id` DESC";		
-		$lstPages = $this->page->custom($query);
-		$this->set("lstPages",$lstPages);
-		$this->_template->renderPage();
+		//$keyword = $_POST["keyword"];
+		$keyword = isset($_REQUEST["sSearch"])?$_REQUEST["sSearch"]:null;
+		$sEcho = isset($_REQUEST["sEcho"])?$_REQUEST["sEcho"]:'';
+		$iDisplayStart = isset($_REQUEST["iDisplayStart"])?$_REQUEST["iDisplayStart"]:0;
+		$iDisplayLength = isset($_REQUEST["iDisplayLength"])?$_REQUEST["iDisplayLength"]:10;
+		if($keyword!=null)
+			$this->page->where("id=$keyword or data like '$keyword'");
+		$this->page->orderBy('`id`','DESC');
+		$this->page->setLimit($iDisplayStart.','.$iDisplayStart+$iDisplayLength);
+		$lstPages = $this->page->search('id,alias,title,datemodified,usermodified,menu_id,active');
+		$result = array('sEcho'=>$sEcho,'iTotalRecords'=>count($lstPages),'iTotalDisplayRecords'=>count($lstPages),'aaData'=>$lstPages);
+		echo json_encode($result);
+		//$this->set("lstPages",$lstPages);
+		//$this->_template->renderPage();
 	}
 	function activePage($id=0) {
 		$this->checkAdmin(true);
@@ -114,6 +124,7 @@ class PageController extends VanillaController {
 				$this->page->datemodified = GetDateSQL();
 				$this->page->usermodified = $_SESSION["account"]["username"];
 				$this->page->menu_id = $menu_id;
+				$this->page->data = "$title $content $menu_id";
 				$this->page->active = 1;
 			} else { //update
 				$this->page->id = $id;
@@ -123,6 +134,7 @@ class PageController extends VanillaController {
 				$this->page->datemodified = GetDateSQL();
 				$this->page->usermodified = $_SESSION["account"]["username"];
 				$this->page->menu_id = $menu_id;
+				$this->page->data = "$title $content $menu_id";
 			}
 			$html = new HTML;
 			$value = "{'datemodified':'".$html->format_date($this->page->datemodified,'d/m/Y H:i:s')."','usermodified':'".$this->page->usermodified."'}";

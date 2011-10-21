@@ -154,6 +154,37 @@
 	}
 	$(document).ready(function(){				
 		$("#title_page").text("Quản Trị Page");
-		loadListPages();
+		oTable = $('#dataTable').dataTable({
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": url("/page/listPages"),
+			"aoColumns": [
+						{ "mDataProp": "id","bSortable": false },
+						{ "mDataProp": "title","bSortable": false },
+						{ "mDataProp": "alias","bSortable": false },
+						{ "mDataProp": "menu_id","bSortable": false},
+						{ "mDataProp": "datemodified","bSortable": false },
+						{ "mDataProp": "usermodified","bSortable": false },
+						{ "mDataProp": "active","bSortable": false },
+						{ "mDataProp": null,"bSortable": false,"sClass":"td_remove" }
+					],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				$.ajax( {
+					"dataType": 'json', 
+					"type": "POST", 
+					"url": sSource, 
+					"data": aoData, 
+					"success": fnCallback
+				} );
+			},
+			"sPaginationType": "full_numbers"
+		});
+		$('#dataTable_filter input').unbind();
+		$('#dataTable_filter input').bind('keyup', function(e) {
+			if(e.keyCode == 13) {
+				oTable.fnFilter(this.value);	
+			}
+		});
 	});
 </script>
