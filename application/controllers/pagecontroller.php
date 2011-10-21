@@ -48,6 +48,8 @@ class PageController extends VanillaController {
 	function form($id=null) {
 		$this->checkAdmin(false);
 		if($id != null && $id != 0) {
+			$arr = array('a' => '20/1/2001', 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+			die(json_encode($arr));
 			$this->page->id=$id;
             $page=$this->page->search();
 			$this->setModel("menu");
