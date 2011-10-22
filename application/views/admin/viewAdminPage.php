@@ -16,10 +16,10 @@
 	<fieldset>
 		<legend>Danh Sách Page</legend>
 		<div id="datagrid">
-			<table width="100%" id="dataTable">
+			<table style="width:100%" id="dataTable">
 				<thead>
 					<tr>
-						<td width="20px">#</td>
+						<td width="20px">ID</td>
 						<td>Tiêu đề</td>
 						<td>URL View</td>
 						<td>Menu</td>
@@ -50,27 +50,7 @@
 		}
 	}
 	function loadListPages() {
-		block("#datagrid");
-		$.ajax({
-			type : "GET",
-			cache: false,
-			url: url("/page/listPages/true"),
-			success : function(data){	
-				//alert(data);
-				unblock("#datagrid");
-				if(data == AJAX_ERROR_NOTLOGIN) {
-					location.href = url("/admin/login");
-				} else {
-					$("#datagrid").html(data);
-					$("input:submit, input:button", "#datagrid").button();	
-				}
-				
-			},
-			error: function(data){ 
-				unblock("#datagrid");
-				alert (data);
-			}			
-		});
+		oTable.fnFilter();
 	}
 	function deletePage() {
 		if(byId("page_id").value=="") {
@@ -149,7 +129,8 @@
 			error: function(data){ alert (data);unblock("#content");}	
 		});
 	}
-	function doEdit(id) {
+	function doEdit(_this) {
+		id = $.trim($(_this.parentNode.parentNode.cells[0]).text());
 		window.open(url('/page/form/'+id),'Page Form','resizable=yes,menubar=no,toolbar=no,status=no,width=1000');
 	}
 	$(document).ready(function(){				
@@ -158,16 +139,17 @@
 			"bJQueryUI": true,
 			"bProcessing": true,
 			"bServerSide": true,
+			"bAutoWidth": false,
 			"sAjaxSource": url("/page/listPages"),
 			"aoColumns": [
-						{ "mDataProp": "id","bSortable": false },
-						{ "mDataProp": "title","bSortable": false },
-						{ "mDataProp": "alias","bSortable": false },
-						{ "mDataProp": "menu_id","bSortable": false},
-						{ "mDataProp": "datemodified","bSortable": false },
-						{ "mDataProp": "usermodified","bSortable": false },
-						{ "mDataProp": "active","bSortable": false },
-						{ "mDataProp": null,"bSortable": false,"sClass":"td_remove" }
+						{ "mDataProp": "page.id","bSortable": false,"sClass":"alignCenter" },
+						{ "mDataProp": "page.title","bSortable": false },
+						{ "mDataProp": "page.alias","bSortable": false },
+						{ "mDataProp": "page.menu_id","bSortable": false},
+						{ "mDataProp": "page.datemodified","bSortable": false },
+						{ "mDataProp": "page.usermodified","bSortable": false },
+						{ "mDataProp": "page.active","bSortable": false },
+						{ "mDataProp": null,"bSortable": false,"sClass":"td_edit" }
 					],
 			"fnServerData": function ( sSource, aoData, fnCallback ) {
 				$.ajax( {
@@ -177,6 +159,9 @@
 					"data": aoData, 
 					"success": fnCallback
 				} );
+			},
+			"fnDrawCallback": function () {
+				$('#dataTable tbody .td_edit').html('<img src="'+url('/public/images/icons/edit.png')+'" title="Chỉnh sửa" style="cursor:pointer" onclick="doEdit(this)"/>');
 			},
 			"sPaginationType": "full_numbers"
 		});
