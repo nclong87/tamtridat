@@ -179,11 +179,11 @@
 					location.href = url("/admin/login");
 					return;
 				}
-				if(data == AJAX_ERROR_SYSTEM) {
+				if(data == 'DONE') {
 					//Load luoi du lieu		
-					message('Lưu Page không thành công!',0);
+					message("Lưu Page thành công!",1);		
 				} else {
-					message("Lưu Page thành công!",1);					
+					message('Lưu Page không thành công!',0);			
 				}
 			},
 			error: function(data){ unblock("body");alert (data);}	

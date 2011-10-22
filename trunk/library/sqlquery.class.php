@@ -259,7 +259,7 @@ class SQLQuery {
 	}
 	
 	/** Saves an Object i.e. Updates/Inserts Query **/
-	function save() {
+	function save($debug=false) {
 		$query = '';
 		if (isset($this->id)) {
 			$updates = '';
@@ -283,6 +283,7 @@ class SQLQuery {
 			$fields = substr($fields,0,-1);
 			$query = 'INSERT INTO '.$this->_table.' ('.$fields.') VALUES ('.$values.')';
 		}
+		if ($debug == true) die($query );
 		$this->_result = mysql_query($query, $this->_dbHandle);
 		$this->clear();
 		if ($this->_result == 0) {

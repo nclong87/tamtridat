@@ -369,3 +369,15 @@ td {
 	font-weight:bold;
 	cursor:pointer;
 }
+thead {
+	text-align: center;
+}
+.alignRight {
+	text-align : right;
+}
+.alignCenter {
+	text-align : center;
+}
+.alignLetf {
+	text-align : left;
+}

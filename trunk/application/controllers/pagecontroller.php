@@ -79,11 +79,13 @@ class PageController extends VanillaController {
 		$sEcho = isset($_REQUEST["sEcho"])?$_REQUEST["sEcho"]:'';
 		$iDisplayStart = isset($_REQUEST["iDisplayStart"])?$_REQUEST["iDisplayStart"]:0;
 		$iDisplayLength = isset($_REQUEST["iDisplayLength"])?$_REQUEST["iDisplayLength"]:10;
-		if($keyword!=null)
-			$this->page->where("id=$keyword or data like '$keyword'");
+		if($keyword!=null) {
+			$this->page->where("and page.id='$keyword' or match(title,content) AGAINST('$keyword' IN BOOLEAN MODE)");
+			
+		}
 		$this->page->orderBy('`id`','DESC');
 		$this->page->setLimit($iDisplayStart.','.$iDisplayStart+$iDisplayLength);
-		$lstPages = $this->page->search('id,alias,title,datemodified,usermodified,menu_id,active');
+		$lstPages = $this->page->search('page.id,alias,title,datemodified,usermodified,menu_id,active');
 		$result = array('sEcho'=>$sEcho,'iTotalRecords'=>count($lstPages),'iTotalDisplayRecords'=>count($lstPages),'aaData'=>$lstPages);
 		echo json_encode($result);
 		//$this->set("lstPages",$lstPages);
@@ -117,6 +119,11 @@ class PageController extends VanillaController {
 			$menu_id = $_POST["page_menu"];
 			$content = $_POST["page_content"];
 			if($id==null) { //insert
+				$this->setModel('data');
+				$this->data->id = null;
+				$this->data->data = "$title $content $menu_id";
+				$data_id = $this->data->insert(true);
+				$this->setModel('page');
 				$this->page->id = null;
 				$this->page->title = $title;
 				$this->page->alias = $alias;
@@ -124,9 +131,15 @@ class PageController extends VanillaController {
 				$this->page->datemodified = GetDateSQL();
 				$this->page->usermodified = $_SESSION["account"]["username"];
 				$this->page->menu_id = $menu_id;
-				$this->page->data = "$title $content $menu_id";
+				$this->page->data_id = $data_id;
 				$this->page->active = 1;
+				$id = $this->page->insert(true);
 			} else { //update
+				$this->page->id = $id;
+				$page = $this->page->search('data_id');
+				if(empty($page))
+					die('ERROR_SYSTEM');
+				$data_id = $page['page']['data_id'];
 				$this->page->id = $id;
 				$this->page->title = $title;
 				$this->page->alias = $alias;
@@ -134,11 +147,16 @@ class PageController extends VanillaController {
 				$this->page->datemodified = GetDateSQL();
 				$this->page->usermodified = $_SESSION["account"]["username"];
 				$this->page->menu_id = $menu_id;
-				$this->page->data = "$title $content $menu_id";
+				$this->page->save();
+				$this->setModel('data');
+				$this->data->id = $data_id;
+				$this->data->data = "$title $content $menu_id";
+				$this->data->save();
+				
 			}
-			$html = new HTML;
-			$value = "{'datemodified':'".$html->format_date($this->page->datemodified,'d/m/Y H:i:s')."','usermodified':'".$this->page->usermodified."'}";
-			$id = $this->page->save();	
+			//$html = new HTML;
+			//$value = "{'datemodified':'".$html->format_date($this->page->datemodified,'d/m/Y H:i:s')."','usermodified':'".$this->page->usermodified."'}";
+			
 			if(isEmpty($menu_id)==false) {
 				$this->setModel("menu");
 				$this->menu->id = $menu_id;
@@ -146,11 +164,11 @@ class PageController extends VanillaController {
 				$this->menu->save();
 				global $cache;
 				$this->menu->where('AND active=1');
-				$this->menu->orderBy('order','ASC');
+				$this->menu->orderBy('`order`','ASC');
 				$data = $this->menu->search();
 				$cache->set("menuList",$data);
 			}
-			print($value);
+			echo 'DONE';
 		} catch (Exception $e) {
 			echo 'ERROR_SYSTEM';
 		}
