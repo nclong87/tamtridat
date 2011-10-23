@@ -47,10 +47,6 @@ class AdminController extends VanillaController {
 	}
 	function viewAdminPage() {
 		$this->checkAdmin(false);
-		$this->setModel("menu");
-		$this->menu->orderBy('`order`','ASC');
-		$lstMenus = $this->menu->search();
-		$this->set("lstMenus",$lstMenus);
 		$this->_template->renderAdminPage(); 
 	}
 	function viewAdminArticle() {
@@ -74,12 +70,6 @@ class AdminController extends VanillaController {
 	}
 	function viewQuanlyDuan() {
 		$this->checkAdmin(false);
-		$this->setModel("linhvuc");
-		$data = $this->linhvuc->search();
-		$this->set("lstLinhvuc",$data);
-		$this->setModel("tinh");
-		$data = $this->tinh->search();
-		$this->set("lstTinh",$data);
 		$this->_template->renderAdminPage(); 
 	}
 	function viewQuanlyRaovat() {

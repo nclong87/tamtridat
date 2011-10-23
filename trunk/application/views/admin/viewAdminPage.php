@@ -1,6 +1,7 @@
 <script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/utils.js"></script>
 <script src="<?php echo BASE_PATH ?>/public/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo BASE_PATH ?>/public/js/jquery.jeditable.js"></script>
+<script src="<?php echo BASE_PATH ?>/public/js/jquery.dateFormat.js"></script>
+
 <link rel="stylesheet" type="text/css" href="<?php echo BASE_PATH ?>/public/css/demo_page.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo BASE_PATH ?>/public/css/demo_table_jui.css" />
 <div style="padding-top:10px;font-size:14px" >
@@ -9,13 +10,13 @@
 		  <div align="center">
 			<div><a href="#"><img src="<?php echo BASE_PATH ?>/public/images/icons/add_icon.png" alt="big_settings" width="25" height="26" border="0" /></a></div>
 					<span class="toplinks">
-			  <a href="#" onclick="showDialogPage()"><span class="toplinks">THÊM PAGE</span></a></span><br />
+			  <a href="#" onclick="openForm()"><span class="toplinks">THÊM PAGE</span></a></span><br />
 		  </div>
 		</div>
 	</div>
+	<div style="float:left;width:100%">
 	<fieldset>
 		<legend>Danh Sách Page</legend>
-		<div id="datagrid">
 			<table style="width:100%" id="dataTable">
 				<thead>
 					<tr>
@@ -35,22 +36,12 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
 	</fieldset>
+	</div>
 </div>
 <script type="text/javascript">
-	var objediting; //Object luu lai row dang chinh sua
-	function message(msg,type) {
-		if(type==1) { //Thong diep thong bao
-			str = "<div class='positive'><span class='bodytext' style='padding-left:30px;'><strong>"+msg+"</strong></span></div>";
-			byId("msg").innerHTML = str;
-		} else if(type == 0) { //Thong diep bao loi
-			str = "<div class='negative'><span class='bodytext' style='padding-left:30px;'><strong>"+msg+"</strong></span></div>";
-			byId("msg").innerHTML = str;
-		}
-	}
 	function loadListPages() {
-		oTable.fnFilter();
+		oTable.fnDraw(false);
 	}
 	function deletePage() {
 		if(byId("page_id").value=="") {
@@ -83,55 +74,52 @@
 			error: function(data){ unblock("#dialogPage #dialog");alert (data);}	
 		});
 	}
-	function doActive(_this) {
-		var cells = _this.parentNode.parentNode.cells;
-		block("#content");
+	function doActive(id) {
+		//var cells = _this.parentNode.parentNode.cells;
+		block("#div_content");
 		$.ajax({
 			type: "GET",
 			cache: false,
-			url : url("/page/activePage/"+$(cells.td_id).text()),
+			url : url("/page/activePage/"+id),
 			success: function(data){
-				unblock("#content");
+				unblock("#div_content");
 				if(data == AJAX_ERROR_NOTLOGIN) {
 					location.href = url("/admin/login");
 					return;
 				}
 				if (data == AJAX_DONE) {					
-					message("Active Page thành công!",1);
-					$(cells.td_active).html("<div class='active' onclick='doUnActive(this)' title='Bỏ Active Page này'></div>");
+					oTable.fnDraw(false);
 				} else {
-					message("Active Page không thành công!",0);
+					alert("Có lỗi xảy ra!");
 				}															
 			},
-			error: function(data){ alert (data);unblock("#content");}	
+			error: function(data){ alert (data);unblock("#div_content");}	
 		});
 	}
-	function doUnActive(_this) {
-		var cells = _this.parentNode.parentNode.cells;
-		block("#content");
+	function doUnActive(id) {
+		//var cells = _this.parentNode.parentNode.cells;
+		block("#div_content");
 		$.ajax({
 			type: "GET",
 			cache: false,
-			url : url("/page/unActivePage/"+$(cells.td_id).text()),
+			url : url("/page/unActivePage/"+id),
 			success: function(data){
-				unblock("#content");
+				unblock("#div_content");
 				if(data == AJAX_ERROR_NOTLOGIN) {
 					location.href = url("/admin/login");
 					return;
 				}
 				if (data == AJAX_DONE) {					
-					message("Bỏ Active Page thành công!",1);
-					$(cells.td_active).html("<div class='inactive' onclick='doActive(this)' title='Active Page này'></div>");
+					oTable.fnDraw(false);
 				} else {
-					message("Bỏ Active Page không thành công!",0);
+					alert("Có lỗi xảy ra!");
 				}															
 			},
-			error: function(data){ alert (data);unblock("#content");}	
+			error: function(data){ alert (data);unblock("#div_content");}	
 		});
 	}
-	function doEdit(_this) {
-		id = $.trim($(_this.parentNode.parentNode.cells[0]).text());
-		window.open(url('/page/form/'+id),'Page Form','resizable=yes,menubar=no,toolbar=no,status=no,width=1000');
+	function openForm(id) {
+		window.open(url('/page/form/'+id),'Page','resizable=yes,menubar=no,toolbar=no,status=no,width=1000');
 	}
 	$(document).ready(function(){				
 		$("#title_page").text("Quản Trị Page");
@@ -142,14 +130,40 @@
 			"bAutoWidth": false,
 			"sAjaxSource": url("/page/listPages"),
 			"aoColumns": [
-						{ "mDataProp": "page.id","bSortable": false,"sClass":"alignCenter" },
+						{ "mDataProp": "page.id","bSortable": false,"sClass":"alignCenter"},
 						{ "mDataProp": "page.title","bSortable": false },
-						{ "mDataProp": "page.alias","bSortable": false },
-						{ "mDataProp": "page.menu_id","bSortable": false},
-						{ "mDataProp": "page.datemodified","bSortable": false },
-						{ "mDataProp": "page.usermodified","bSortable": false },
-						{ "mDataProp": "page.active","bSortable": false },
-						{ "mDataProp": null,"bSortable": false,"sClass":"td_edit" }
+						{
+							"bSortable": false,
+							"fnRender": function( oObj ) {
+								page = oObj['aData']['page'];
+								return '/page/view/'+page['id']+page['alias']; 
+							} 
+						},
+						{ 	"mDataProp": "page.menu_id","bSortable": false},
+						{
+							"bSortable": false,
+							"fnRender": function( oObj ) {
+								page = oObj['aData']['page'];
+								return $.format.date(page['datemodified'], 'dd/MM/yyyy HH:ss');
+							} 
+						},
+						{ 	"mDataProp": "page.usermodified","bSortable": false },
+						{ 	"bSortable": false,"sClass":"alignCenter",
+							"fnRender": function( oObj ) {
+								page = oObj['aData']['page'];
+								if(page['active']==0)
+									return "<center><div class='inactive' onclick=\"doActive('"+page['id']+"')\" title='Active Page này'></div></center>";
+								else if(page['active']==1)
+									return "<center><div class='active' onclick=\"doUnActive('"+page['id']+"')\" title='Bỏ Active Page này'></div></center>";
+								else
+									return 'N/A';
+							} 
+						},
+						{ 	"mDataProp": null,"bSortable": false,
+							"fnRender": function( oObj ) {
+								return '<center><img src="'+url('/public/images/icons/edit.png')+'" title="Chỉnh sửa" style="cursor:pointer" onclick="openForm(\''+page['id']+'\')"/></center>'; 
+							}
+						}
 					],
 			"fnServerData": function ( sSource, aoData, fnCallback ) {
 				$.ajax( {
@@ -159,9 +173,6 @@
 					"data": aoData, 
 					"success": fnCallback
 				} );
-			},
-			"fnDrawCallback": function () {
-				$('#dataTable tbody .td_edit').html('<img src="'+url('/public/images/icons/edit.png')+'" title="Chỉnh sửa" style="cursor:pointer" onclick="doEdit(this)"/>');
 			},
 			"sPaginationType": "full_numbers"
 		});
