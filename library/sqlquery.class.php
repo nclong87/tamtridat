@@ -126,10 +126,11 @@ class SQLQuery {
 		if (isset($this->_orderBy)) {
 			$conditions .= ' ORDER BY '.$this->_orderBy.' '.$this->_order;
 		}
-		if (isset($this->_page)) {
-			$offset = ($this->_page-1)*$this->_limit;
-			$conditions .= ' LIMIT '.$this->_limit.' OFFSET '.$offset;
-		}
+		//if (isset($this->_limit)) {
+			//$offset = ($this->_page-1)*$this->_limit;
+			//$conditions .= ' LIMIT '.$this->_limit.' OFFSET '.$offset;
+			//$conditions .= ' LIMIT '.$this->_limit;
+		//}
 		$this->_query = "SELECT $select FROM ".$from.' WHERE '.$conditions;
 		if($debug)
 			die($this->_query);

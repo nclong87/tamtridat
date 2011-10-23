@@ -32,14 +32,15 @@
 		</style>
 		<!--> 
 		<![endif]-->
-		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery-ui.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery_blockUI.js"></script>		
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/constances.js"></script>	
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/sprinkle.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/validator.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/tiny_mce/jquery.tinymce.js"></script>
-		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/utils.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/removeHTMLTags.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.stringToSlug.min.js"></script>
 		<script type="text/javascript">
 			function block(id) {
 				$(id).block({ 
@@ -82,7 +83,7 @@
 <body>
 <center>
 <form id="formPage">
-<input type="hidden" name="page_id" id="page_id" value="<?php echo $id?>" />
+<input type="hidden" name="page_id" id="page_id" value="" />
 <fieldset>
 	<legend><span style="font-weight:bold;">Thông Tin Page</span></legend>
 	<table class="center" width="80%">
@@ -94,20 +95,20 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td width="75px" align="left">Tiêu Đề :</td>
+				<td width="75px" style="width:75px" align="left">Tiêu Đề :</td>
 				<td align="left">
-					<input type="text" name="page_title" id="page_title" style="width:95%" onblur="fillAlias()" value="<?php echo $title?>"/>
+					<input type="text" name="page_title" id="page_title" style="width:95%"/>
 					<span style="color:red;font-weight:bold;cursor:pointer;" title="Bắt buộc nhập dữ liệu">*</span>
 				</td>										
 			</tr>
 			<tr>
-				<td align="left">URL Alias :</td>
+				<td align="left" style="width:75px">URL Alias :</td>
 				<td align="left">
-					<input type="text" name="page_alias" id="page_alias" style="width:95%" value="<?php echo $alias ?>"/>
+					<input type="text" name="page_alias" id="page_alias" style="width:95%"/>
 				</td>										
 			</tr>
 			<tr>
-				<td align="left">Menu :</td>
+				<td align="left" style="width:75px">Menu :</td>
 				<td align="left">
 					<select name="page_menu" id="page_menu">
 						<option value="0">--Chọn Menu--</option>
@@ -122,7 +123,7 @@
 			<tr>
 				<td colspan="2" align="left">
 				Nội dung : (<a href="#" onclick="showImagesPanel()">Mở Gallery</a>)<br/>
-				<textarea name="page_content" id="page_content" class="tinymce"><?php echo $content ?></textarea>
+				<textarea name="page_content" id="page_content" class="tinymce"><?php echo isset($data)?$data['content']:''?></textarea>
 				</td>
 			</tr>					
 			<tr>
@@ -139,10 +140,6 @@
 </body>
 </html>
 <script>
-	function fillAlias() {
-		value = byId("page_title").value;
-		byId("page_alias").value = remove_space(remove_accents(value));
-	}
 	function doReset() {
 		$("#formPage")[0].reset(); //Reset form cua jquery, giu lai gia tri mac dinh cua cac field	
 		if(objediting)
@@ -160,9 +157,6 @@
 		if(byId("page_id").value!="") {
 			if(!confirm("Bạn muốn cập nhật Page này?"))
 				return;
-		}
-		if(byId("page_alias").value=="") {
-			fillAlias();
 		}
 		dataString = $("#formPage").serialize();
 		//alert(dataString);return;
@@ -192,8 +186,12 @@
 	window.onbeforeunload = function(){
 		 opener.loadListPages();
 	}
-	$(document).ready(function(){			
-		$("#page_menu option[value=<?php echo $menu_id?>]").attr("selected", true);
+	$(document).ready(function(){	
+		$("#page_title").stringToSlug({
+			setEvents: 'keyup keydown blur',
+			getPut: '#page_alias',
+			space: '-'
+		});
 		$('#page_content').tinymce({
 			script_url : url_base+'/public/js/tiny_mce/tiny_mce.js',
 			theme : "advanced",
@@ -211,6 +209,17 @@
 			convert_urls : false,
 			content_css : "css/content.css"
 		});
+		<?php
+		if(isset($data)) {
+			
+			?>
+			byId("page_id").value = '<?php echo $data['id']?>'
+			byId("page_title").value = '<?php echo $data['title']?>'
+			byId("page_alias").value = '<?php echo $data['alias']?>'
+			$("#page_menu option[value=<?php echo $data['menu_id']?>]").attr("selected", true);
+			<?php
+		}
+		?>
 		$("input:submit, input:button", "body").button();
 	});
 	

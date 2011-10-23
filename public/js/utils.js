@@ -56,25 +56,7 @@ function remove_accents( str ) {
 	r = r.replace(new RegExp("œ", 'g'),"oe");
 	return r;
 }
-function remove_space(str) {
-	sResult = "";
-	i=0;
-	flag = false;
-	array = new Array(" ",",",":","'","\"","`");
-	while(i<str.length) {
-		c = str.charAt(i);
-		if(array.indexOf(c)>=0) {
-			if(flag == false)
-				sResult = sResult+"-";
-			flag = true;
-		} else {
-			sResult = sResult+c;
-			flag = false;
-		}
-		i++;
-	}
-	return sResult;
-}
+
 function FormatMoney(str) {
 	rs="";
 	dem=0;

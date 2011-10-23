@@ -109,6 +109,53 @@ class FileController extends VanillaController {
 			echo 'ERROR_SYSTEM';
 		}
 	}
+	function uploadImg() {
+		try {
+			$file_id = null;
+			//Get upload attach file_id
+			global $cache;
+			$ma=time();
+			if($_FILES['fileupload']['name']==NULL)
+				die('ERROR_SYSTEM');
+			$str=$_FILES['fileupload']['tmp_name'];
+			$size= $_FILES['fileupload']['size'];
+			if($size==0) {
+				die('ERROR_FILESIZE');
+			} else {
+				$dir = ROOT . DS . 'public'. DS . 'upload' . DS . 'images' . DS;
+				$filename = preg_replace("/[&' +-]/","_",$_FILES['fileupload']['name']);				
+				move_uploaded_file($_FILES['fileupload']['tmp_name'],$dir . $filename);
+				//die($filename);
+				$sFileType='';
+				$i = strlen($filename)-1;
+				while($i>=0) {
+					if($filename[$i]=='.')
+						break;
+					$sFileType=$filename[$i].$sFileType;
+					$i--;
+				}
+				$str=$dir . $filename;
+				$fname=$ma.'_'.$filename;
+				$arrType = $cache->get('imageTypes');
+				if(!in_array(strtolower($sFileType),$arrType)) {
+					unlink($str);
+					die('ERROR_WRONGFORMAT');
+				}
+				else {
+					$str2= $dir . $fname;
+					rename($str,$str2);
+					$this->setModel('image');
+					$this->image->id = null;
+					$this->image->filename = $filename;
+					$this->image->fileurl = BASE_PATH.'/upload/images/'.$fname;
+					$file_id = $this->image->insert(true);
+				}
+			}
+			echo $file_id;
+		} catch (Exception $e) {
+			echo 'ERROR_SYSTEM';
+		}
+	}
 	function afterAction() {
 
 	}

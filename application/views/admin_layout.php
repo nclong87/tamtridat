@@ -61,7 +61,7 @@
 <div style="float: left; background-color: white;width:100%;">
 <div id="logo">
   <div align="center"><br />
-    <img src="<?php echo BASE_PATH ?>/public/images/logo.png" alt="logo" width="116" height="34" /><br />
+    <img src="<?php echo BASE_PATH ?>/public/images/logo.png" alt="logo" width="225px" /><br />
   </div>
 </div>
 <div id="arrows"></div>
@@ -148,7 +148,7 @@
     </div>
   </div>
 </div>
-<div id="content"> 
+<div id="div_content" style="float:left;"> 
   <table width="100%" border="0">
     <tr>
       <th height="25px" valign="middle" bgcolor="#E5E5E5" scope="col"><h1 align="left" id="title_page" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" style="font-size:13pt;height:25px;padding-left:10px;padding-top:5px;">Welcome to your Admin Panel</h1></th> <!--// H1 title -->
@@ -235,9 +235,9 @@
 		
 	}	
 	$(document).ready(function(){
-		wleftcol = ($("#leftcol").height()==0)?0:$("#leftcol").width();
-		wrightcol = ($("#rightcol").height()==0)?0:$("#rightcol").width();
-		$("#content").css('max-width',$("#wrapcontent").width()-wleftcol-wrightcol);
+		wleftcol = ($("#leftcolumn").height()==0)?0:$("#leftcolumn").width();
+		//wrightcol = ($("#rightcol").height()==0)?0:$("#rightcol").width();
+		$("#div_content").css('width',$("#wrapcontent").width()-wleftcol);
 		$("#dialog_panel").dialog({
 			autoOpen: false,
 			minWidth: 200,
