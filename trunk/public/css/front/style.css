@@ -489,3 +489,11 @@ span.chosen {
 	text-align:justify;
 	font-family: Verdana,Arial,sans-serif !important;
 }
+#div_content {
+	background: none repeat scroll 0 0 #FFFFFF;
+    padding: 10px 0 40px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+	float:left;
+}

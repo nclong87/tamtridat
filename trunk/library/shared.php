@@ -351,7 +351,11 @@ function HTML2Text($html) {
 	return $h2t->get_text();
 }
 function trimString($str,$maxlen=30) {
-	if(strlen($str)<=$maxlen)
+	$len = strlen($str);
+	while($maxlen<$len && $str[$maxlen]!=' ') {
+		$maxlen++;
+	}
+	if($len<=$maxlen)
 		return $str;
 	return substr($str,0,$maxlen)."...";
 }

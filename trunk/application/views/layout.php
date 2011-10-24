@@ -12,6 +12,7 @@
 <script src="<?php echo BASE_PATH ?>/public/js/cufon-replace.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.easing.1.3.js"></script> 
 <script src="<?php echo BASE_PATH ?>/public/js/FF-cash.js" type="text/javascript"></script>
+<script src="<?php echo BASE_PATH ?>/public/js/jquery.ellipsis.js" type="text/javascript"></script>
 <!--[if lt IE 7]>
 	<div style=' clear: both; text-align:center; position: relative;'>
 		<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/images/upgrade.jpg" border="0"  alt="" /></a>
@@ -48,19 +49,15 @@
 						  <li><a href="tin-tuc.html">Tin Tức</a></li>
 						  <li><a href="tuyen-dung.html">Tuyển Dụng</a></li>
 						  <li><a href="danh-sach-du-an.html">Dự Án</a></li>
-						  <li><a href="san-giao-dich.html">Sàn Giao Dịch</a></li>
 						  <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
 						  <li class="last-item"><a href="lien-he.html">Liên Hệ</a></li>
 						</ul>
 					</nav>
 				</div>
 			</header>
-			<section id="content">
 			<?php
 			include (ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
 			?>
-			</section>
-<!-- footer -->
 			<footer>
 				<div class="row-top">
 					<div class="row-padding">

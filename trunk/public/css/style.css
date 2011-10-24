@@ -67,7 +67,7 @@ p {margin-bottom:18px}
 /* header */
 header {width:100%;margin-bottom:-16px;position:relative;z-index:1}
 .row-1 {width:100%;height:90px;overflow:hidden;padding-top:5px}
-.row-2 {width:100%;min-height:70px;position:relative;z-index:1}
+.row-2 {width:100%;min-height:55px;position:relative;z-index:1}
 .row-3 {width:100%;min-height:417px;position:relative;z-index:2}
 h1 {padding:0px 0 0 40px;position:relative;float:left}
 .logo {display:block;width:400px;height:45px;text-indent:-5000px;background:url(../images/logo.png) 0 0 no-repeat;margin:10px 0 8px 0}
@@ -82,8 +82,25 @@ h1 {padding:0px 0 0 40px;position:relative;float:left}
 .menu {width:100%}
 .menu li {float:left;position:relative;margin-right:1px}
 .menu li.last-item {margin:0}
-.menu li a {-moz-border-radius: 18px 18px 0 0;background: none repeat scroll 0 0 #000000;color: #FFFFFF;display: inline-block;font-size: 100%;font-weight: bold;line-height: 1.22em;margin-top: 10px;padding: 13px 0 36px;text-align: center;width: 140px;}
-.menu li a.active, .menu li a:hover {color:#0f0f0f;background:#fff;padding:13px 0 36px;margin:0}
+.menu li a {
+-moz-border-radius: 18px 18px 0 0;
+background: none repeat scroll 0 0 #000000;
+color: #FFFFFF;
+display: inline-block;
+font-size: 15px;
+font-weight: bold;
+line-height: 10px;
+margin-top: 10px;
+padding: 20px 0;
+text-align: center;
+width: 140px;
+}
+.menu li a.active, .menu li a:hover {
+background: none repeat scroll 0 0 #FFFFFF;
+color: #0F0F0F;
+margin: 0;
+padding: 20px 0 30px;
+}
 /* slider */
 .slider-wrapper {overflow:hidden;width:100%;position:absolute;top:-16px;left:0;background:#fff;border-radius:0 18px 0 0;-moz-border-radius:0 18px 0 0;-webkit-border-radius:0 18px 0 0}
 .slider {height:403px;width:948px;margin:10px auto}
@@ -155,7 +172,11 @@ dl.contact dt, dl.contact dd {margin-bottom:5px}
 .buttons {padding-top:16px;text-align:right}
 .buttons a {margin-left:6px;padding:9px 25px 11px}
 /* footer */
-footer {width:100%;color: white;}
+footer {
+  color: white;
+  float: left;
+  width: 100%;
+}
 footer a {color:#00a9ff}
 .row-top {background: none repeat scroll 0 0 #000000;color: snow;padding: 5px 0 10px;width: 100%;}
 .row-padding {padding:0 40px}
@@ -466,4 +487,12 @@ textarea {
   margin: 0;
   padding: 0;
   width: 220px;
+}
+#div_content {
+	background: none repeat scroll 0 0 #FFFFFF;
+    padding: 10px 0 40px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+	float:left;
 }
