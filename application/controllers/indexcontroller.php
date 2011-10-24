@@ -41,9 +41,12 @@ class IndexController extends VanillaController {
 		//error('Test');
 		//print_r(session_cache_expire());die();
 		global $cache;
-		$this->setModel('image');
-		$images = $this->image->search();
-		$this->set('images',$images);
+		$this->setModel('duan');
+		$this->duan->showHasOne(array('image'));
+		$this->duan->orderBy('duan.dateupdate','desc');
+		$this->duan->where(' and duan.backuped=0');
+		$duans = $this->duan->search('duan.id,tenduan,alias,fileurl');
+		$this->set('datas',$duans);
 		$this->_template->render();
 	}
     function viewmore($page=2) {
