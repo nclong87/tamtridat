@@ -37,14 +37,7 @@ class DuanController extends VanillaController {
 	function setModel($model) {
 		 $this->$model =& new $model;
 	}
-	function view($id=null) {
-		if($id != null && $id != 0) {
-			$this->duan->id=$id;
-            $duan=$this->duan->search();
-			$this->set("duan",$duan);
-		}
-		$this->_template->render();
-	}
+	
 	function form($id=null) {
 		$this->checkAdmin(false);
 		if($id != null && $id != 0) {
@@ -60,14 +53,7 @@ class DuanController extends VanillaController {
 		$this->set("lstLoaiduan",$lstLoaiduan);
 		$this->_template->renderPage();
 	}
-	function getContentById($id=null) {	
-		
-		if($id != null && $id != 0) {
-			$this->duan->id=$id;
-            $duan=$this->duan->search();
-			print_r($duan['duan']['content']);
-		}
-	}
+	
     function listDuan() {
 		$this->checkAdmin(true);
 		//$keyword = $_POST["keyword"];
@@ -156,6 +142,31 @@ class DuanController extends VanillaController {
 			echo "ERROR_SYSTEM";
 		} else {
 			echo "DONE";
+		}
+	}
+	function view($id=null) {
+		if($id != null && $id != 0) {
+			$this->duan->id=$id;
+            $duan=$this->duan->search();
+			$this->set("duan",$duan);
+		}
+		$this->_template->render();
+	}
+	function projects() {
+		
+		$this->setModel('loaiduan');
+		$this->loaiduan->orderBy('tenloaiduan','ASC');
+		$loaiduans = $this->loaiduan->search();
+		$this->set("loaiduans",$loaiduans);
+		$this->set("controller",'du-an');
+		$this->_template->render();
+	}
+	function getContentById($id=null) {	
+		
+		if($id != null && $id != 0) {
+			$this->duan->id=$id;
+            $duan=$this->duan->search();
+			print_r($duan['duan']['content']);
 		}
 	}
 	function afterAction() {

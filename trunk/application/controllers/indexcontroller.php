@@ -47,6 +47,7 @@ class IndexController extends VanillaController {
 		$this->duan->where(' and duan.backuped=0');
 		$duans = $this->duan->search('duan.id,tenduan,alias,fileurl');
 		$this->set('datas',$duans);
+		$this->set('controller','home');
 		$this->_template->render();
 	}
     function viewmore($page=2) {

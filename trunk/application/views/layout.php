@@ -45,25 +45,35 @@
 				<div class="row-2">
 					<nav>
 						<ul class="menu">
-						  <li><a class="active" href="index.html">Trang Chủ</a></li>
-						  <li><a href="tin-tuc.html">Tin Tức</a></li>
-						  <li><a href="tuyen-dung.html">Tuyển Dụng</a></li>
-						  <li><a href="danh-sach-du-an.html">Dự Án</a></li>
-						  <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
-						  <li class="last-item"><a href="lien-he.html">Liên Hệ</a></li>
+						<?php
+						$menu_length = count($menuList);
+						$i = 0;
+						foreach($menuList as $menu) {
+							$i++;
+							$menuLiclass = '';
+							$menuAclass = '';
+							if($i==$menu_length)
+								$menuLiclass = ' class="last-item"';
+							if($controller!=null && $controller==$menu["menu"]["id"])
+								$menuAclass = 'class="active"';
+							echo "<li$menuLiclass><a $menuAclass id='".$menu["menu"]["id"]."' href='".BASE_PATH.$menu["menu"]["url"]."'>".$menu["menu"]["name"]."</a></li>";
+						}
+						?>
 						</ul>
 					</nav>
 				</div>
 			</header>
+			<section id="content">
 			<?php
 			include (ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
 			?>
+			</section>
 			<footer>
 				<div class="row-top">
 					<div class="row-padding">
 						<div class="wrapper">
-							<b>Địa Chỉ : </b>70-79, Đồng Khởi, P.Bến Nghé, Q.1, TP. Hồ Chí Minh<br/>
-							<b>HotLine : </b>083.123.456
+							<b>Địa Chỉ : </b>105 Tân Trang, Phường 9, Quận Tân Bình, Thành Phố Hồ Chí Minh<br/>
+							<b>HotLine : </b>08.6265.1553
 						</div>
 					</div>
 				</div>

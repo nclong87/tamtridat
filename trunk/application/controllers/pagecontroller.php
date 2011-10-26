@@ -42,8 +42,9 @@ class PageController extends VanillaController {
 			$this->page->id=$id;
             $page=$this->page->search();
 			$this->set("page",$page);
+			$this->set('controller',$page['page']['menu_id']);
+			$this->_template->render();
 		}
-		$this->_template->render();
 	}
 	function form($id=null) {
 		$this->checkAdmin(false);
@@ -146,7 +147,7 @@ class PageController extends VanillaController {
 			if(isEmpty($menu_id)==false) {
 				$this->setModel("menu");
 				$this->menu->id = $menu_id;
-				$this->menu->url = BASE_PATH."/page/view/".$id."/".$alias;
+				$this->menu->url = "/page/view/".$id."/".$alias;
 				$this->menu->save();
 				global $cache;
 				$this->menu->where('AND active=1');

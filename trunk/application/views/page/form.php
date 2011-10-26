@@ -39,8 +39,8 @@
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/sprinkle.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/validator.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/tiny_mce/jquery.tinymce.js"></script>
-		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/removeHTMLTags.js"></script>
-		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.stringToSlug.min.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/utils.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.stringToSlug.js"></script>
 		<script type="text/javascript">
 			function block(id) {
 				$(id).block({ 
@@ -188,7 +188,7 @@
 	}
 	$(document).ready(function(){	
 		$("#page_title").stringToSlug({
-			setEvents: 'keyup keydown blur',
+			setEvents: 'blur',
 			getPut: '#page_alias',
 			space: '-'
 		});

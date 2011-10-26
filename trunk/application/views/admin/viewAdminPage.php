@@ -136,7 +136,7 @@
 							"bSortable": false,
 							"fnRender": function( oObj ) {
 								page = oObj['aData']['page'];
-								return '/page/view/'+page['id']+page['alias']; 
+								return '/page/view/'+page['id']+'/'+page['alias']; 
 							} 
 						},
 						{ 	"mDataProp": "page.menu_id","bSortable": false},
