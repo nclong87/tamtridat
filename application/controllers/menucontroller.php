@@ -55,6 +55,7 @@ class MenuController extends VanillaController {
 	}
 	function listMenus($ajax) {
 		$this->checkAdmin(true);
+		$this->menu->orderBy('`active`','DESC');
 		$this->menu->orderBy('`order`','ASC');
 		$lstMenus = $this->menu->search();
 		$this->set("lstMenus",$lstMenus);

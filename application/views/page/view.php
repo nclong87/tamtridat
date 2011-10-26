@@ -1,13 +1,12 @@
-<div id="content">
-	<?php
-	if(isset($page)) {
-		echo $page["page"]["content"];
-	}
-	?>
+<?php
+if($page==null)
+	die();
+?>
+<div class="padding">
+	<div class="wrapper margin-bot">
+		<h4 class="p2" style="border-bottom: 1px groove gray"><?php echo $page["page"]["title"]?></h4>
+		<div id="detail">
+			<?php echo $page["page"]["content"]?>
+		</div>
+	</div>
 </div>
-<script>
-	$(document).ready(function() {
-		menuid = '#<?php echo $page["page"]["menu_id"] ?>';
-		$("#menu "+menuid).addClass("current");
-	});
-</script>

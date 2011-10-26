@@ -6,7 +6,7 @@ class SQLQuery {
 	protected $_query;
 	protected $_table;
 	protected $_describe = array();
-	protected $_orderBy;
+	protected $_orderBy = '';
 	protected $_groupBy;
 	protected $_order;
 	protected $_extraConditions;
@@ -77,8 +77,10 @@ class SQLQuery {
 	}
 
 	function orderBy($orderBy, $order = 'ASC') {
-		$this->_orderBy = $orderBy;
-		$this->_order = $order;
+		if(!empty($this->_orderBy))
+			$this->_orderBy .= ','.$orderBy.' '.$order;
+		else
+			$this->_orderBy .= $orderBy.' '.$order;
 	}
 
 	function search($select="*",$debug=false) {
@@ -123,8 +125,8 @@ class SQLQuery {
 			$conditions .= $this->_groupBy;
 		}
 		//$conditions = substr($conditions,0,-4);
-		if (isset($this->_orderBy)) {
-			$conditions .= ' ORDER BY '.$this->_orderBy.' '.$this->_order;
+		if (!empty($this->_orderBy)) {
+			$conditions .= ' ORDER BY '.$this->_orderBy;
 		}
 		//if (isset($this->_limit)) {
 			//$offset = ($this->_page-1)*$this->_limit;
@@ -349,12 +351,11 @@ class SQLQuery {
 			$this->$field = null;
 		}
 
-		$this->_orderby = null;
+		$this->_orderBy = null;
 		$this->_extraConditions = null;
 		$this->_hO = null;
 		$this->_hJoin = null;
 		$this->_page = null;
-		$this->_order = null;
 	}
 
 	/** Pagination Count **/
