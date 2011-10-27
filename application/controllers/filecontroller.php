@@ -139,7 +139,7 @@ class FileController extends VanillaController {
 				$arrType = $cache->get('imageTypes');
 				if(!in_array(strtolower($sFileType),$arrType)) {
 					unlink($str);
-					die('ERROR_WRONGFORMAT');
+					echo('ERROR_WRONGFORMAT');
 				}
 				else {
 					$str2= $dir . $fname;
@@ -149,9 +149,10 @@ class FileController extends VanillaController {
 					$this->image->filename = $filename;
 					$this->image->fileurl = BASE_PATH.'/upload/images/'.$fname;
 					$file_id = $this->image->insert(true);
+					$arr = array('id'=>$file_id,'filename'=>$filename,'fileurl'=>BASE_PATH.'/upload/images/'.$fname);
+					echo json_encode($arr);
 				}
 			}
-			echo $file_id;
 		} catch (Exception $e) {
 			echo 'ERROR_SYSTEM';
 		}

@@ -12,7 +12,10 @@ body {  /* Body and background image DIV */
 	font-family:Verdana !important;
 	font-size:10pt !important;
 }
-
+img {
+    border: 1px solid #A5A5A5;
+    padding: 1px;
+}
 .bodytext {	font-family: Arial, Helvetica, sans-serif;	font-size: 12px;	color: #505050;	line-height: 21px;}  /* bodytext, most used style */
 .bodytext_table {	font-family: Arial, Helvetica, sans-serif;	font-size: 12px;	color: #505050;	line-height: 21px; padding: 2px 10px}  /* table's bodytext */
 .title_table {	font-family: Arial, Helvetica, sans-serif;	font-size: 14px;	color: #FFF;	line-height: 21px; padding: 2px 10px; background-image: url(../../images/table_bg.jpg);}  /* table's titles */

@@ -43,9 +43,12 @@ class DuanController extends VanillaController {
 		if($id != null && $id != 0) {
 			//$arr = array('a' => '20/1/2001', 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
 			//die(json_encode($arr));
+			$this->duan->showHasOne('image');
 			$this->duan->id=$id;
             $duan=$this->duan->search();
-			$this->set("data",$duan['duan']);
+			$this->set("duan",$duan['duan']);
+			if($duan['image']['id']!=null)
+				$this->set("image",$duan['image']);
 		}
 		$this->setModel("loaiduan");
 		$this->loaiduan->orderBy('`tenloaiduan`','ASC');
@@ -100,31 +103,34 @@ class DuanController extends VanillaController {
 			$alias = $_POST["alias"];
 			$image_id = $_POST["image_id"];
 			$thongtinchitiet = $_POST["thongtinchitiet"];
+			$mota = trimString($_POST["mota"],240);
 			$loaiduan_id = $_POST["loaiduan_id"];
 			$tenloaiduan = $_POST["tenloaiduan"];
 			if($id==null) { //insert
 				$this->duan->id = null;
 				$this->duan->tenduan = $tenduan;
 				$this->duan->alias = $alias;
+				$this->duan->mota = $mota;
 				$this->duan->image_id = $image_id;
 				$this->duan->thongtinchitiet = $thongtinchitiet;
 				$this->duan->dateupdate = GetDateSQL();
 				$this->duan->account_id = $_SESSION["account"]["id"];
 				$this->duan->loaiduan_id = $loaiduan_id;
-				$this->duan->valuesearch = remove_accents("$tenduan $thongtinchitiet $tenloaiduan");
+				$this->duan->valuesearch = remove_accents("$tenduan $thongtinchitiet $tenloaiduan $mota");
 				$this->duan->backuped = 0;
 				$id = $this->duan->insert(true);
 			} else { //update
 				$this->duan->id = $id;
 				$this->duan->tenduan = $tenduan;
 				$this->duan->alias = $alias;
+				$this->duan->mota = $mota;
 				$this->duan->image_id = $image_id;
 				$this->duan->thongtinchitiet = $thongtinchitiet;
 				$this->duan->dateupdate = GetDateSQL();
 				$this->duan->account_id = $_SESSION["account"]["id"];
 				$this->duan->loaiduan_id = $loaiduan_id;
-				$this->duan->valuesearch = remove_accents("$tenduan $thongtinchitiet $tenloaiduan");
-				$this->duan->save();
+				$this->duan->valuesearch = remove_accents("$tenduan $thongtinchitiet $tenloaiduan $mota");
+				$this->duan->update();
 			}
 			echo 'DONE';
 		} catch (Exception $e) {
@@ -152,8 +158,25 @@ class DuanController extends VanillaController {
 		}
 		$this->_template->render();
 	}
-	function projects() {
-		
+	function projects($ipageindex=1) {
+		$this->duan->showHasOne('image');
+		$this->duan->setLimit(PAGINATE_LIMIT);
+		$this->duan->setPage($ipageindex);
+		$this->duan->where(' and backuped=0');
+		$this->duan->orderBy('dateupdate','desc');
+		$duans = $this->duan->search();
+		$totalPages = $this->duan->totalPages();
+		$ipagesbefore = $ipageindex - INT_PAGE_SUPPORT;
+		if ($ipagesbefore < 1)
+			$ipagesbefore = 1;
+		$ipagesnext = $ipageindex + INT_PAGE_SUPPORT;
+		if ($ipagesnext > $totalPages)
+			$ipagesnext = $totalPages;
+		$this->set("duans",$duans);
+		$this->set('pagesindex',$ipageindex);
+		$this->set('pagesbefore',$ipagesbefore);
+		$this->set('pagesnext',$ipagesnext);
+		$this->set('pageend',$totalPages);
 		$this->setModel('loaiduan');
 		$this->loaiduan->orderBy('tenloaiduan','ASC');
 		$loaiduans = $this->loaiduan->search();

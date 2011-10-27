@@ -38,7 +38,7 @@
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/constances.js"></script>	
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/sprinkle.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/validator.js"></script>
-		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/tiny_mce/jquery.tinymce.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/ckeditor/ckeditor.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/utils.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.stringToSlug.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.form.js"></script>
@@ -88,7 +88,7 @@
 <input type="hidden" name="image_id" id="image_id" value="" />
 <fieldset>
 	<legend><span style="font-weight:bold;">Thông Tin Dự Án</span></legend>
-	<table class="center" width="80%">
+	<table class="center" width="99%">
 		<thead>
 			<tr>
 				<td colspan="4" id="msg">
@@ -123,9 +123,15 @@
 				</td>										
 			</tr>
 			<tr>
+				<td align="left">Mô tả :</td>
+				<td align="left">
+					<textarea name="mota" id="mota" rows="2" style="width:99%"><?php echo isset($duan)?$duan['mota']:''?></textarea>
+				</td>										
+			</tr>
+			<tr>
 				<td colspan="2" align="left">
 				Thông tin chi tiết : (<a href="#" onclick="showImagesPanel()">Mở Gallery</a>)<br/>
-				<textarea name="thongtinchitiet" id="thongtinchitiet" class="tinymce"><?php echo isset($data)?$data['thongtinchitiet']:''?></textarea>
+				<textarea name="thongtinchitiet" id="thongtinchitiet" class="tinymce"><?php echo isset($duan)?$duan['thongtinchitiet']:''?></textarea>
 				</td>
 			</tr>	
 			</form>
@@ -159,7 +165,7 @@
 		byId("msg").innerHTML="";
 	}
 	function doSave() {
-		//alert($("#loaiduan_id option:selected")[0].text);return;
+		//alert($('#cke_contents_thongtinchitiet').getText());return;
 		checkValidate=true;
 		validate(['require'],'tenduan',["Vui lòng nhập tên dự án!"]);
 		validate(['requireselect'],'loaiduan_id',["Vui lòng chọn loại dự án!"]);
@@ -202,28 +208,21 @@
 		$("#fileuploaded").html("Uploading...");
 		$('#formUpload').submit();
 	}
+	function removechosen(idchosen) {
+		byId("image_id").value = "";
+		$("#chosen_"+idchosen).remove();
+		$("#div_filedinhkem").show();
+	}
 	$(document).ready(function(){	
 		$("#tenduan").stringToSlug({
 			setEvents: 'blur',
 			getPut: '#alias',
 			space: '-'
 		});
-		$('#thongtinchitiet').tinymce({
-			script_url : url_base+'/public/js/tiny_mce/tiny_mce.js',
-			theme : "advanced",
-			width : 960,
-			height : 400,
-			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
-			theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,code,|,preview,|,forecolor,backcolor",
-			theme_advanced_buttons3 : "tablecontrols,emotions,media",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
-			theme_advanced_statusbar_location : "bottom",
-			theme_advanced_resizing : true,
-			relative_urls : false,
-			convert_urls : false,
-			content_css : "css/content.css"
+		CKEDITOR.replace( 'thongtinchitiet',
+		{
+			fullPage : true,
+			extraPlugins : 'docprops'
 		});
 		$('#formUpload').ajaxForm({ 
 			url:        url("/file/uploadImg"), 
@@ -241,16 +240,12 @@
 					message("Upload file sai định dạng!",0);
 					return;
 				}
-				if(isNaN(data) == true) {
-					$("#div_filedinhkem").show();
-					message("Lỗi hệ thống, vui lòng thử lại sau!",0);
-				} else {
-					byId("msg").innerHTML="";
-					byId("image_id").value = data;
-					idchosen = "chosen_"+data;
-					$("#div_filedinhkem").hide();
-					$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen">'+byId("fileupload").value+'<img onclick="removechosen('+data+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
-				} 
+				var jsonObj = eval( "(" + data + ")" );
+				byId("msg").innerHTML="";
+				byId("image_id").value = jsonObj .id;
+				idchosen = "chosen_"+jsonObj .id;
+				$("#div_filedinhkem").hide();
+				$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen">'+byId("fileupload").value+'<img onclick="removechosen('+jsonObj .id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
 			},
 			error : function(data) {
 				$("#div_filedinhkem").show();
@@ -258,13 +253,22 @@
 			} 
 		});
 		<?php
-		if(isset($data)) {
+		if(isset($duan)) {
 			
 			?>
-			byId("id").value = '<?php echo $data['id']?>'
-			byId("tenduan").value = '<?php echo $data['tenduan']?>'
-			byId("alias").value = '<?php echo $data['alias']?>'
-			$("#loaiduan_id option[value=<?php echo $data['loaiduan_id']?>]").attr("selected", true);
+			byId("id").value = '<?php echo $duan['id']?>'
+			byId("tenduan").value = '<?php echo $duan['tenduan']?>'
+			byId("alias").value = '<?php echo $duan['alias']?>'
+			$("#loaiduan_id option[value=<?php echo $duan['loaiduan_id']?>]").attr("selected", true);
+			<?php
+		}
+		if(isset($image)) {
+			?>
+			image_id = '<?php echo $image['id']?>';
+			byId("image_id").value = image_id;
+			idchosen = "chosen_"+image_id;
+			$("#div_filedinhkem").hide();
+			$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen"><?php echo $image['filename'] ?><img onclick="removechosen('+image_id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
 			<?php
 		}
 		?>

@@ -53,10 +53,13 @@ class SQLQuery {
 	}
 	function showHasOne($arrModels=null) {
 		$this->_hO = 1;
-		if($arrModels!=null) {
+		if($arrModels==null)
+			return;
+		if(is_array($arrModels)) {
 			foreach($arrModels as $model)
 				array_push($this->_hOModels,$model);
-		}
+		} else
+			array_push($this->_hOModels,$arrModels);
 	}
 	function hasJoin($arrChilds = null,$arrParents=null) {
 		$this->_hJoin = 1;
@@ -128,11 +131,10 @@ class SQLQuery {
 		if (!empty($this->_orderBy)) {
 			$conditions .= ' ORDER BY '.$this->_orderBy;
 		}
-		//if (isset($this->_limit)) {
-			//$offset = ($this->_page-1)*$this->_limit;
-			//$conditions .= ' LIMIT '.$this->_limit.' OFFSET '.$offset;
-			//$conditions .= ' LIMIT '.$this->_limit;
-		//}
+		if (isset($this->_page)) {
+			$offset = ($this->_page-1)*$this->_limit;
+			$conditions .= ' LIMIT '.$this->_limit.' OFFSET '.$offset;
+		}
 		$this->_query = "SELECT $select FROM ".$from.' WHERE '.$conditions;
 		if($debug)
 			die($this->_query);
