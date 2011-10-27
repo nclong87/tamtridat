@@ -2,25 +2,43 @@
 					<div class="wrapper margin-bot">
 						<div class="col-3">
 							<h4 class="p2" style="border-bottom: 1px groove gray">Các Dự Án</h4>
-							<div class="first_text">
-								<div class="cat_box1"><a href="chi-tiet-du-an.html" title="Cao ốc Văn phòng 25 Bis Nguyễn Thị Minh Khai" class="left"><img alt="Cao ốc Văn phòng 25 Bis Nguyễn Thị Minh Khai" src="images/gallery/02_minhkhai12.jpg"></a>
+							<?php
+							foreach ($duans as $duan) {
+								$image = $duan['image'];
+								$duan = $duan['duan'];
+								$linkduan = BASE_PATH.'/duan/view/'.$duan['id'].'/'.$duan['alias'];
+								?>
+								<div class="first_text">
+								<div class="cat_box1"><a href="<?php echo $linkduan?>" title="<?php echo $duan['tenduan']?>" class="left"><img alt="<?php echo $duan['tenduan']?>" src="<?php echo $image['fileurl']?>"></a>
 								</div>
-								<a href="chi-tiet-du-an.html" class="avata">Cao ốc Văn phòng 25 Bis Nguyễn Thị Minh Khai</a>
-								<div class="cat_intro">Vị trí: 25 Bis, Nguyễn Thị Minh Khai, Phường Đa Kao, Quận 1, TP.HCM. Dự án Cao ốc văn phòng tại 25 Bis Nguyễn Thị Minh Khai tọa lạc ngay ...</div>
+								<a href="<?php echo $linkduan?>" class="avata"><?php echo $duan['tenduan']?></a>
+								<div class="cat_intro"><?php echo $duan['mota']?></div>
 							</div>
-							<div class="first_text">
-								<div class="cat_box1"><a href="chi-tiet-du-an.html" title="Dự án the HARMONA – cao ốc căn hộ" class="left"><img alt="Dự án the HARMONA – cao ốc căn hộ" src="images/gallery/1.jpg"></a>
-								</div>
-								<a href="chi-tiet-du-an.html" class="avata">Dự án the HARMONA – cao ốc căn hộ</a>
-								<div class="cat_intro">The Harmona là cao ốc căn hộ kết hợp trung tâm thương mại, tọa lạc tại 33 Trương Công Định, phường 14, quận Tân Bình, do công ty Cổ Phần ...</div>
+								<?php
+							}
+							?>
+							<div id="paging">
+							<center>
+							<?php 
+							$linktmp = BASE_PATH.'/duan/projects';
+							if($pagesbefore>1)
+								echo '<a class="paging" style="padding-right:5px" href="'.$linktmp.'">1 ...</a>';
+							while($pagesbefore<$pagesindex) {
+								echo "<a class='paging' href='$linktmp/$pagesbefore'>$pagesbefore</a>";
+								$pagesbefore++;
+							}
+							?>
+							<a class="current_page" href="#"><?php echo $pagesindex ?></a>
+							<?php 
+							while($pagesnext>$pagesindex) {
+								$pagesindex++;
+								echo "<a class='paging' href='$linktmp/$pagesindex'>$pagesindex</a>";
+							}
+							if($pagesnext<$pageend)
+								echo "<a class='paging' style='padding-right:5px' href='$linktmp/$pageend'>... $pageend</a>";
+							?>
+							</center>
 							</div>
-							<div class="first_text">
-								<div class="cat_box1"><a href="chi-tiet-du-an.html" title="Âu Cơ Tower" class="left"><img alt="Âu Cơ Tower" src="images/gallery/2.jpg"></a>
-								</div>
-								<a href="chi-tiet-du-an.html" class="avata">Âu Cơ Tower</a>
-								<div class="cat_intro">Vị trí: 659, Âu Cơ, Phường Tân Thành, Quận Tân Phú, TP.HCM. Âu Cơ Tower được thiết kế theo phong cách hiện đại với mật độ xây dựng chỉ chiếm ...</div>
-							</div>
-							<div class="yt-uix-pager"><button class="yt-uix-pager-selected yt-uix-button" type="button"><span class="yt-uix-button-content">1</span></button><button class=" yt-uix-button" type="button" onclick="selectpage(2)"><span class="yt-uix-button-content">2</span></button><button class=" yt-uix-button" type="button" onclick="selectpage(3)"><span class="yt-uix-button-content">3</span></button><button class=" yt-uix-button" type="button" onclick="selectpage(4)"><span class="yt-uix-button-content">4</span></button></div>
 						</div>
 						<div class="col-4">
 							<div class="block-news">
