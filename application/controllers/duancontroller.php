@@ -184,6 +184,39 @@ class DuanController extends VanillaController {
 		$this->set("controller",'du-an');
 		$this->_template->render();
 	}
+	function loaiduan($loaiduan_id=null,$ipageindex=1) {
+		if($loaiduan_id!=null) {
+			$this->duan->showHasOne('image');
+			$this->duan->setLimit(PAGINATE_LIMIT);
+			$this->duan->setPage($ipageindex);
+			$this->duan->where(" and backuped=0 and loaiduan_id='$loaiduan_id'");
+			$this->duan->orderBy('dateupdate','desc');
+			$duans = $this->duan->search();
+			$totalPages = $this->duan->totalPages();
+			$ipagesbefore = $ipageindex - INT_PAGE_SUPPORT;
+			if ($ipagesbefore < 1)
+				$ipagesbefore = 1;
+			$ipagesnext = $ipageindex + INT_PAGE_SUPPORT;
+			if ($ipagesnext > $totalPages)
+				$ipagesnext = $totalPages;
+			$this->set("duans",$duans);
+			$this->set('pagesindex',$ipageindex);
+			$this->set('pagesbefore',$ipagesbefore);
+			$this->set('pagesnext',$ipagesnext);
+			$this->set('pageend',$totalPages);
+			$this->setModel('loaiduan');
+			$this->loaiduan->orderBy('tenloaiduan','ASC');
+			$loaiduans = $this->loaiduan->search();
+			$this->set("loaiduans",$loaiduans);
+			foreach ($loaiduans as $loaiduan) {
+				if($loaiduan['loaiduan']['id']==$loaiduan_id)
+					$this->set("tenloaiduan",$loaiduan['loaiduan']['tenloaiduan']);
+			}
+			$this->set("loaiduan_id",$loaiduan_id);
+			$this->set("controller",'du-an');
+			$this->_template->render();
+		}
+	}
 	function getContentById($id=null) {	
 		
 		if($id != null && $id != 0) {

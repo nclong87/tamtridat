@@ -23,8 +23,8 @@ define('MAX_GIATHAU',50000000);
 define('MIN_GIATHAU',50000);
 define('MAX_RAOVAT',3);
 
-define('PAGINATE_LIMIT', 2);
-define('INT_PAGE_SUPPORT', 4);
+define('PAGINATE_LIMIT', 1);
+define('INT_PAGE_SUPPORT', 2);
 define('YAHOO1', 'nclong87');
 define('YAHOO2', 'nclong87');
 define('YAHOO3', 'nclong87');
