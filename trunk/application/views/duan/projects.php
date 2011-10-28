@@ -2,6 +2,7 @@
 					<div class="wrapper margin-bot">
 						<div class="col-3">
 							<h4 class="p2" style="border-bottom: 1px groove gray">Các Dự Án</h4>
+							<div style="padding-bottom:10px">
 							<?php
 							foreach ($duans as $duan) {
 								$image = $duan['image'];
@@ -17,7 +18,7 @@
 								<?php
 							}
 							?>
-							<div id="paging">
+							</div>
 							<center>
 							<?php 
 							$linktmp = BASE_PATH.'/duan/projects';
@@ -38,7 +39,6 @@
 								echo "<a class='paging' style='padding-right:5px' href='$linktmp/$pageend'>... $pageend</a>";
 							?>
 							</center>
-							</div>
 						</div>
 						<div class="col-4">
 							<div class="block-news">
