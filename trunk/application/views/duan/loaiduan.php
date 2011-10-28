@@ -1,7 +1,7 @@
 <div class="padding">
 					<div class="wrapper margin-bot">
 						<div class="col-3">
-							<h4 class="p2" style="border-bottom: 1px groove gray">Các Dự Án</h4>
+							<h4 class="p2" style="border-bottom: 1px groove gray"><?php echo $tenloaiduan ?></h4>
 							<div style="float: left; padding-bottom: 30px; width: 100%;">
 							<?php
 							foreach ($duans as $duan) {
@@ -21,7 +21,7 @@
 							</div>
 							<center>
 							<?php 
-							$linktmp = BASE_PATH.'/duan/projects';
+							$linktmp = BASE_PATH.'/duan/loaiduan/'.$loaiduan_id;
 							if($pagesbefore>1)
 								echo '<a class="paging" href="'.$linktmp.'">1</a> ... ';
 							while($pagesbefore<$pagesindex) {
@@ -47,7 +47,10 @@
 									<?php
 									foreach($loaiduans as $loaiduan) {
 										$linkloaiduan = BASE_PATH.'/duan/loaiduan/'.$loaiduan['loaiduan']['id'];
-										echo '<li><a href="'.$linkloaiduan.'">'.$loaiduan['loaiduan']['tenloaiduan'].'</a></li>';
+										$classActive = '';
+										if($loaiduan['loaiduan']['id']==$loaiduan_id)
+											$classActive = 'class="active"';
+										echo '<li><a '.$classActive.' href="'.$linkloaiduan.'">'.$loaiduan['loaiduan']['tenloaiduan'].'</a></li>';
 									}
 									?>
 								</ul>

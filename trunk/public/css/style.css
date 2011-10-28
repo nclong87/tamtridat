@@ -6,7 +6,7 @@ html {width:100%}
 body {font-family:Verdana, Arial, Helvetica, sans-serif;font-size:100%;color:#393939;min-width:984px;background:url(../images/body.jpg) center 0 repeat}
 .ic, .ic a {border:0;float:right;background:#fff;color:#f00;width:50%;line-height:10px;font-size:10px;margin:-220% 0 0 0;overflow:hidden;padding:0}
 a {color:#00A9FF;outline:none;text-decoration: none;}
-a:hover {color:#F68618;text-decoration:none}
+a:hover , a.active {color:#F68618;text-decoration:none}
 .col-1, .col-2, .col-3, .col-4  {float:left}
 .wrapper {width:100%;overflow:hidden}
 .extra-wrap {overflow:hidden}
@@ -45,7 +45,7 @@ p {margin-bottom:18px}
 .color-3 {color:#fabb0c}
 .color-4 {color:#0f0f0f}
 /* boxes */
-.margin-bot {padding-bottom: 45px;}
+.margin-bot {padding-bottom: 10px;}
 .spacing {margin-right:35px}
 .indent {padding:0 0 0px 32px}
 .indent2 {padding-top:10px}
@@ -410,7 +410,6 @@ div .cat_box1 .left {
 	color: #59951e !important;
 }
 span {
-	display: block;
 }
 div {
     display: block;
@@ -501,15 +500,18 @@ textarea {
 	position:relative;
 }
 a.paging {
-	background: url("images/paging_bt.png") no-repeat scroll -33px 0 transparent;
+	background: url("images/paging_bt.png") no-repeat scroll 1px 0 transparent;
 	padding: 7px 11px;
 	text-align: center;
 	width: 30px;
+	font-weight:bold;
+	color:navy;
 }
 a.current_page, a.paging:hover {
-	background: url("images/paging_bt.png") no-repeat scroll 0 0 transparent;
+	background: url("images/paging_bt.png") no-repeat scroll -32px 0 transparent;
 	padding: 7px 11px;
 	text-align: center;
+	font-weight:bold;
+	color:red;
 	width: 30px;
-	font-weight: bold;
 }
