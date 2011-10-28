@@ -42,6 +42,8 @@
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/utils.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.stringToSlug.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.form.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/image_viewer/thickbox.js"></script>
+		<link type="text/css" rel="stylesheet" href="<?php echo BASE_PATH ?>/public/js/image_viewer/thickbox.css"   />
 		<script type="text/javascript">
 			function block(id) {
 				$(id).block({ 
@@ -131,7 +133,7 @@
 			<tr>
 				<td colspan="2" align="left">
 				Thông tin chi tiết : (<a href="#" onclick="showImagesPanel()">Mở Gallery</a>)<br/>
-				<textarea name="thongtinchitiet" id="thongtinchitiet" class="tinymce"><?php echo isset($duan)?$duan['thongtinchitiet']:''?></textarea>
+				<textarea name="thongtinchitiet" id="thongtinchitiet"><?php echo isset($duan)?$duan['thongtinchitiet']:''?></textarea>
 				</td>
 			</tr>	
 			</form>
@@ -175,6 +177,7 @@
 			if(!confirm("Bạn muốn cập nhật dự án này?"))
 				return;
 		}
+		CKEDITOR.instances['thongtinchitiet'].updateElement();
 		dataString = $("#myForm").serialize()+'&tenloaiduan='+$("#loaiduan_id option:selected")[0].text;
 		//alert(dataString);return;
 		byId("msg").innerHTML="";
@@ -245,7 +248,8 @@
 				byId("image_id").value = jsonObj .id;
 				idchosen = "chosen_"+jsonObj .id;
 				$("#div_filedinhkem").hide();
-				$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen">'+byId("fileupload").value+'<img onclick="removechosen('+jsonObj .id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
+				$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen"><a href="'+jsonObj.fileurl+'" class="thickbox">'+byId("fileupload").value+'</a><img onclick="removechosen('+jsonObj .id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
+				thickbox();
 			},
 			error : function(data) {
 				$("#div_filedinhkem").show();
@@ -268,7 +272,9 @@
 			byId("image_id").value = image_id;
 			idchosen = "chosen_"+image_id;
 			$("#div_filedinhkem").hide();
-			$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen"><?php echo $image['filename'] ?><img onclick="removechosen('+image_id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
+			$("#fileuploaded").html('<div style="display: block;" id="'+idchosen+'" ") class="chosen-container"><span class="chosen"><a href="<?php echo $image['fileurl']?>" class="thickbox"><?php echo $image['filename'] ?></a><img onclick="removechosen('+image_id+')" class="btn-remove-chosen" src="<?php echo BASE_PATH?>/public/images/icons/close_8x8.gif"/></span></div>');
+			//$("#fileuploaded").html('<a href="<?php echo $image['fileurl']?>" class="thickbox"></a>');
+			thickbox();
 			<?php
 		}
 		?>

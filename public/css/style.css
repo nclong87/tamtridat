@@ -45,7 +45,7 @@ p {margin-bottom:18px}
 .color-3 {color:#fabb0c}
 .color-4 {color:#0f0f0f}
 /* boxes */
-.margin-bot {margin-bottom:35px}
+.margin-bot {padding-bottom: 45px;}
 .spacing {margin-right:35px}
 .indent {padding:0 0 0px 32px}
 .indent2 {padding-top:10px}
@@ -501,23 +501,15 @@ textarea {
 	position:relative;
 }
 a.paging {
-	background: url("images/paging.png") no-repeat scroll 0 0 transparent;
-	display: block;
-	height: 25px;
-	padding-top: 5px;
-	text-align: center;
-	width: 27px;
-	float:left;
-	margin-right:5px;
-}
-a.current_page {
-	background: url("images/current_page.png") no-repeat scroll 0 0 transparent;
-	display: block;
-	font-weight: bold;
-	height: 25px;
-	padding-top: 5px;
+	background: url("images/paging_bt.png") no-repeat scroll -33px 0 transparent;
+	padding: 7px 11px;
 	text-align: center;
 	width: 30px;
-	float:left;
-	margin-right:5px;
+}
+a.current_page, a.paging:hover {
+	background: url("images/paging_bt.png") no-repeat scroll 0 0 transparent;
+	padding: 7px 11px;
+	text-align: center;
+	width: 30px;
+	font-weight: bold;
 }
