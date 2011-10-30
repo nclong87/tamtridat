@@ -100,10 +100,6 @@
       <br />
       <table width="190" border="0">
         <tr>
-          <td width="18" align="center"><img src="<?php echo BASE_PATH ?>/public/images/icons/widget_icon.png" alt="dashboard" width="16" height="13" /></td>
-          <td width="130" class="navigation"><a href="<?php echo BASE_PATH ?>/admin/index" >Quản Trị Widget</a></td>
-        </tr>
-        <tr>
           <td align="center"><img src="<?php echo BASE_PATH ?>/public/images/icons/menu.png" alt="menu" width="16" /></td>
           <td class="navigation"><a href="<?php echo BASE_PATH ?>/admin/viewAdminMenu" >Quản Trị Menu</a></td> 
         </tr>
@@ -117,7 +113,7 @@
         </tr>
 		<tr>
           <td align="center"><img src="<?php echo BASE_PATH ?>/public/images/icons/articles.png" alt="articles" width="16" /></td>
-          <td class="navigation"><a href="<?php echo BASE_PATH ?>/admin/viewAdminArticle" >Quản Lý Tin Tức</a></td>
+          <td class="navigation"><a href="<?php echo BASE_PATH ?>/admin/viewQuanlyTintuc" >Quản Lý Tin Tức</a></td>
         </tr>
         <tr>
           <td align="center"><img src="<?php echo BASE_PATH ?>/public/images/icons/users.png" alt="users" width="16" height="18" /></td>

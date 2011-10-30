@@ -38,8 +38,7 @@ class AdminController extends VanillaController {
 		 $this->$model =& new $model;
 	} 
 	function index() {
-		$this->checkAdmin(false);
-		$this->_template->renderAdminPage(); 
+		performAction('admin','viewQuanlyDuan');
 	}
 	function viewAdminMenu() {
 		$this->checkAdmin(false);
@@ -49,7 +48,7 @@ class AdminController extends VanillaController {
 		$this->checkAdmin(false);
 		$this->_template->renderAdminPage(); 
 	}
-	function viewAdminArticle() {
+	function viewQuanlyTintuc() {
 		$this->checkAdmin(false);
 		$this->_template->renderAdminPage(); 
 	}

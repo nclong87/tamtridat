@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="shortcut icon" href="<?php echo BASE_PATH ?>/public/css/backend/images/favico.ico" type="image/x-icon">
-		<title>Trang Quản Trị - Form Dự Án</title>         
+		<title>Trang Quản Trị - Form Tin Tức</title>         
 		<link href="<?php echo BASE_PATH ?>/public/css/backend/jquery-ui-1.8.5.custom.css" rel="stylesheet" type="text/css" />
 		<link href="<?php echo BASE_PATH ?>/public/css/backend/form.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
@@ -89,7 +89,7 @@
 <input type="hidden" name="id" id="id" value="" />
 <input type="hidden" name="image_id" id="image_id" value="" />
 <fieldset>
-	<legend><span style="font-weight:bold;">Thông Tin Dự Án</span></legend>
+	<legend><span style="font-weight:bold;">Nội Dung Tin Tức</span></legend>
 	<table class="center" width="99%">
 		<thead>
 			<tr>
@@ -99,9 +99,9 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td width="90px" style="width:90px" align="left">Tên dự án :</td>
+				<td width="90px" style="width:90px" align="left">Tiêu đề :</td>
 				<td align="left">
-					<input type="text" name="tenduan" id="tenduan" style="width:95%"/>
+					<input type="text" name="title" id="title" style="width:95%"/>
 					<span style="color:red;font-weight:bold;cursor:pointer;" title="Bắt buộc nhập dữ liệu">*</span>
 				</td>										
 			</tr>
@@ -112,28 +112,15 @@
 				</td>										
 			</tr>
 			<tr>
-				<td align="left">Loại dự án :</td>
-				<td align="left">
-					<select name="loaiduan_id" id="loaiduan_id">
-						<option value="">--Chọn loại dự án--</option>
-						<?php
-						foreach($lstLoaiduan as $loaiduan) {
-							echo "<option value='".$loaiduan["loaiduan"]["id"]."'>".$loaiduan["loaiduan"]["tenloaiduan"]."</option>";
-						}
-						?>
-					</select>
-				</td>										
-			</tr>
-			<tr>
 				<td align="left">Mô tả :</td>
 				<td align="left">
-					<textarea name="mota" id="mota" rows="2" style="width:99%"><?php echo isset($duan)?$duan['mota']:''?></textarea>
+					<textarea name="mota" id="mota" rows="2" style="width:99%"><?php echo isset($tintuc)?$tintuc['mota']:''?></textarea>
 				</td>										
 			</tr>
 			<tr>
 				<td colspan="2" align="left">
 				Thông tin chi tiết : (<a href="#" onclick="showImagesPanel()">Mở Gallery</a>)<br/>
-				<textarea name="thongtinchitiet" id="thongtinchitiet"><?php echo isset($duan)?$duan['thongtinchitiet']:''?></textarea>
+				<textarea name="thongtinchitiet" id="thongtinchitiet"><?php echo isset($tintuc)?$tintuc['thongtinchitiet']:''?></textarea>
 				</td>
 			</tr>	
 			</form>
@@ -169,23 +156,22 @@
 	function doSave() {
 		//alert($('#cke_contents_thongtinchitiet').getText());return;
 		checkValidate=true;
-		validate(['require'],'tenduan',["Vui lòng nhập tên dự án!"]);
-		validate(['requireselect'],'loaiduan_id',["Vui lòng chọn loại dự án!"]);
+		validate(['require'],'title',["Vui lòng nhập tiêu đề!"]);
 		if(checkValidate == false)
 			return;
 		if(byId("id").value!="") {
-			if(!confirm("Bạn muốn cập nhật dự án này?"))
+			if(!confirm("Bạn muốn cập nhật tin này?"))
 				return;
 		}
 		CKEDITOR.instances['thongtinchitiet'].updateElement();
-		dataString = $("#myForm").serialize()+'&tenloaiduan='+$("#loaiduan_id option:selected")[0].text;
+		dataString = $("#myForm").serialize();
 		//alert(dataString);return;
 		byId("msg").innerHTML="";
 		block("body");
 		$.ajax({
 			type: "POST",
 			cache: false,
-			url : url("/duan/saveDuan&"),
+			url : url("/tintuc/saveTintuc&"),
 			data: dataString,
 			success: function(data){
 				unblock("body");	
@@ -195,9 +181,9 @@
 				}
 				if(data == 'DONE') {
 					//Load luoi du lieu		
-					message("Lưu dự án thành công!",1);		
+					message("Lưu tin thành công!",1);		
 				} else {
-					message('Lưu dự án không thành công!',0);			
+					message('Lưu tin không thành công!',0);			
 				}
 			},
 			error: function(data){ unblock("body");alert (data);}	
@@ -217,7 +203,7 @@
 		$("#div_filedinhkem").show();
 	}
 	$(document).ready(function(){	
-		$("#tenduan").stringToSlug({
+		$("#title").stringToSlug({
 			setEvents: 'blur',
 			getPut: '#alias',
 			space: '-'
@@ -257,13 +243,12 @@
 			} 
 		});
 		<?php
-		if(isset($duan)) {
+		if(isset($tintuc)) {
 			
 			?>
-			byId("id").value = '<?php echo $duan['id']?>'
-			byId("tenduan").value = '<?php echo $duan['tenduan']?>'
-			byId("alias").value = '<?php echo $duan['alias']?>'
-			$("#loaiduan_id option[value=<?php echo $duan['loaiduan_id']?>]").attr("selected", true);
+			byId("id").value = '<?php echo $tintuc['id']?>'
+			byId("title").value = '<?php echo $tintuc['title']?>'
+			byId("alias").value = '<?php echo $tintuc['alias']?>'
 			<?php
 		}
 		if(isset($image)) {

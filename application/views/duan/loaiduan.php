@@ -9,12 +9,21 @@
 								$duan = $duan['duan'];
 								$linkduan = BASE_PATH.'/duan/view/'.$duan['id'].'/'.$duan['alias'];
 								?>
-								<div class="first_text">
-								<div class="cat_box1"><a href="<?php echo $linkduan?>" title="<?php echo $duan['tenduan']?>" class="left"><img alt="<?php echo $duan['tenduan']?>" src="<?php echo $image['fileurl']?>"></a>
+								<div id="intro" style="float:left">
+									<div class="picture-medium">
+										<div class="body">
+											<a title="<?php echo $duan['tenduan']?>" href="<?php echo $linkduan?>">
+												<img width="250px" alt="<?php echo $duan['tenduan']?>" title="<?php echo $duan['tenduan']?>" src="<?php echo BASE_PATH.$image['fileurl']?>">
+											</a>
+										</div>
+										<div class="bottom">
+										<center>
+										<img src="<?php echo BASE_PATH.'/public/css/images/picture-200-shadow-bottom.jpg'?>"/>
+										</center>
+										</div>
+									</div>
+									<div class="description"><?php echo $duan['mota']?></div>
 								</div>
-								<a href="<?php echo $linkduan?>" class="avata"><?php echo $duan['tenduan']?></a>
-								<div class="cat_intro"><?php echo $duan['mota']?></div>
-							</div>
 								<?php
 							}
 							?>
