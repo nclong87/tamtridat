@@ -99,7 +99,7 @@ class FileController extends VanillaController {
 					$this->setModel('file');
 					$this->file->id = null;
 					$this->file->filename = $filename;
-					$this->file->fileurl = BASE_PATH.'/upload/files/'.$fname;
+					$this->file->fileurl = '/upload/files/'.$fname;
 					$this->file->status = 1;
 					$file_id = $this->file->insert(true);
 				}
@@ -147,7 +147,7 @@ class FileController extends VanillaController {
 					$this->setModel('image');
 					$this->image->id = null;
 					$this->image->filename = $filename;
-					$this->image->fileurl = BASE_PATH.'/upload/images/'.$fname;
+					$this->image->fileurl = '/upload/images/'.$fname;
 					$file_id = $this->image->insert(true);
 					$arr = array('id'=>$file_id,'filename'=>$filename,'fileurl'=>BASE_PATH.'/upload/images/'.$fname);
 					echo json_encode($arr);

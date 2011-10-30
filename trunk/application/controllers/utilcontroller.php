@@ -49,7 +49,7 @@ class UtilController extends VanillaController {
 	function resetCache() {
 		$this->checkAdmin(true);
 		global $cache;
-		$this->setModel("widget");
+		/*$this->setModel("widget");
 		$strWhere = "AND position='banner' ";
 		$strWhere .= "AND active=1 ";
 		$this->widget->where($strWhere);
@@ -79,12 +79,27 @@ class UtilController extends VanillaController {
 		$this->widget->where($strWhere);
 		$this->widget->orderBy('order','ASC');
 		$data = $this->widget->search();
-		$cache->set("rightcol",$data);
+		$cache->set("rightcol",$data);*/
 		$this->setModel("menu");
 		$this->menu->where('AND active=1');
-		$this->menu->orderBy('order','ASC');
+		$this->menu->orderBy('`order`','ASC');
 		$data = $this->menu->search();
 		$cache->set("menuList",$data);
+		
+		$this->setModel("loaiduan");
+		$this->loaiduan->orderBy('id','ASC');
+		$data = $this->loaiduan->search();
+		$cache->set("loaiduan",$data);
+		
+		$this->setModel("tintuc");
+		$this->tintuc->setLimit(2);
+		$this->tintuc->setPage(1);
+		$this->tintuc->where('AND backuped=0');
+		$this->tintuc->orderBy('datemodified','desc');
+		$data = $this->tintuc->search();
+		$cache->set("lastnews",$data);
+		
+		echo 'DONE';
 	}
 	
 	function captcha() {

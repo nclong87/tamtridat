@@ -101,7 +101,7 @@ class DuanController extends VanillaController {
 			$id = $_POST["id"];
 			$tenduan = $_POST["tenduan"];
 			$alias = $_POST["alias"];
-			$image_id = $_POST["image_id"];
+			$image_id = $_POST["image_id"]==null?'0':$_POST["image_id"];
 			$thongtinchitiet = $_POST["thongtinchitiet"];
 			$mota = trimString($_POST["mota"],240);
 			$loaiduan_id = $_POST["loaiduan_id"];
@@ -152,11 +152,15 @@ class DuanController extends VanillaController {
 	}
 	function view($id=null) {
 		if($id != null && $id != 0) {
+			$this->duan->showHasOne('image');
 			$this->duan->id=$id;
             $duan=$this->duan->search();
-			$this->set("duan",$duan);
-		}
-		$this->_template->render();
+			$this->set("duan",$duan['duan']);
+			$this->set("image",$duan['image']);
+			$this->set("controller",'du-an');
+			$this->_template->render();
+		} else
+			error('Liên kết không tồn tại!');
 	}
 	function projects($ipageindex=1) {
 		$this->duan->showHasOne('image');
@@ -177,10 +181,6 @@ class DuanController extends VanillaController {
 		$this->set('pagesbefore',$ipagesbefore);
 		$this->set('pagesnext',$ipagesnext);
 		$this->set('pageend',$totalPages);
-		$this->setModel('loaiduan');
-		$this->loaiduan->orderBy('tenloaiduan','ASC');
-		$loaiduans = $this->loaiduan->search();
-		$this->set("loaiduans",$loaiduans);
 		$this->set("controller",'du-an');
 		$this->_template->render();
 	}

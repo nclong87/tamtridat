@@ -30,8 +30,8 @@
 			<header>
 				<div class="row-1">
 					<h1>
-						<a class="logo" href="index.html">YourCompany.com</a>
-						<strong class="slog">Slogan Here!</strong>
+						<a class="logo" href="index.html">Tamtridat.com</a>
+						<strong class="slog">CTY TNHH TƯ VẤN THIẾT KẾ XÂY DỰNG</strong>
 					</h1>
 					<form id="search-form" action="" method="post" >
 						<fieldset>
@@ -54,7 +54,7 @@
 							$menuAclass = '';
 							if($i==$menu_length)
 								$menuLiclass = ' class="last-item"';
-							if($controller!=null && $controller==$menu["menu"]["id"])
+							if(isset($controller) && $controller==$menu["menu"]["id"])
 								$menuAclass = 'class="active"';
 							echo "<li$menuLiclass><a $menuAclass id='".$menu["menu"]["id"]."' href='".BASE_PATH.$menu["menu"]["url"]."'>".$menu["menu"]["name"]."</a></li>";
 						}

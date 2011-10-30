@@ -20,7 +20,7 @@ class Template {
     function render($doNotRenderHeader = 0)
     {
 		global $cache;
-		$data = $cache->get("banner");
+		/*$data = $cache->get("banner");
 		$this->set('banner',$data);
 		$data = $cache->get("menu");
 		$this->set('menu',$data);
@@ -29,7 +29,7 @@ class Template {
 		$data = $cache->get("rightcol");
 		$this->set('rightcol',$data);
 		$data = $cache->get("footer");
-		$this->set('footer',$data);
+		$this->set('footer',$data);*/
 		$data = $cache->get("menuList");
 		
 		$this->set('menuList',$data);

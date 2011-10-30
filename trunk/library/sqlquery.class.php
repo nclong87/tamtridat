@@ -325,7 +325,7 @@ class SQLQuery {
 			$this->clear();
 		}
 	}
-	function update($where = null) {
+	function update($where = null,$debug=false) {
 		if($where == null) 
 			$where = '`id`=\''.mysql_real_escape_string($this->id).'\'';
 		$query = '';
@@ -340,8 +340,8 @@ class SQLQuery {
 		}
 		$updates = substr($updates,0,-1);
 		$query = 'UPDATE '.$this->_table.' SET '.$updates.' WHERE '.$where;		
-		//if($debug==true)
-		//	die($query);
+		if($debug==true)
+			die($query);
 		$this->_result = mysql_query($query, $this->_dbHandle);
 		$return = $this->id;
 		$this->clear();
