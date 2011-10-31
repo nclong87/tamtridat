@@ -37,7 +37,17 @@ class TintucController extends VanillaController {
 	function setModel($model) {
 		 $this->$model =& new $model;
 	}
-	
+	function cache() {
+		$this->checkAdmin(true);
+		global $cache;
+		$this->setModel('tintuc');
+		$this->tintuc->setLimit(2);
+		$this->tintuc->setPage(1);
+		$this->tintuc->where('AND backuped=0');
+		$this->tintuc->orderBy('datemodified','desc');
+		$data = $this->tintuc->search('id,alias,title,datemodified,mota');
+		$cache->set("lastnews",$data);
+	}	
 	function form($id=null) {
 		$this->checkAdmin(false);
 		if($id != null && $id != 0) {
@@ -75,6 +85,7 @@ class TintucController extends VanillaController {
 			$this->tintuc->id = $id;
 			$this->tintuc->backuped = 0;
 			$this->tintuc->save();
+			$this->cache();
 			echo "DONE";
 		}
 	}
@@ -84,6 +95,7 @@ class TintucController extends VanillaController {
 			$this->tintuc->id = $id;
 			$this->tintuc->backuped = 1;
 			$this->tintuc->save();
+			$this->cache();
 			echo "DONE";
 		}
 	}
@@ -123,22 +135,26 @@ class TintucController extends VanillaController {
 				$this->tintuc->valuesearch = remove_accents("$title $thongtinchitiet $mota");
 				$this->tintuc->update();
 			}
+			$this->cache();
 			echo 'DONE';
 		} catch (Exception $e) {
 			echo 'ERROR_SYSTEM';
 		}
 		
 	}    
-	function deleteTintuc() {
+	function delete() {
 		$this->checkAdmin(true);
-		if(!isset($_GET["id"]))
-			die("ERROR_SYSTEM");
-		$id = $_GET["id"];
-		$this->tintuc->id=$id;
-		if($this->tintuc->delete()==-1) {
-			echo "ERROR_SYSTEM";
-		} else {
+		try {
+			if(!isset($_POST["ids"]))
+				die("ERROR_SYSTEM");
+			$ids = $_POST["ids"];
+			if($ids == '' || empty($ids))
+				die("ERROR_SYSTEM");
+			$this->tintuc->delete($ids);
+			$this->cache();
 			echo "DONE";
+		} catch (Exception $e) {
+			echo 'ERROR_SYSTEM';
 		}
 	}
 	function view($id=null) {
@@ -149,6 +165,10 @@ class TintucController extends VanillaController {
 			$this->set("tintuc",$tintuc['tintuc']);
 			$this->set("image",$tintuc['image']);
 			$this->set("controller",'tin-tuc');
+			$viewcount = $tintuc['tintuc']['viewcount'];
+			$this->tintuc->id=$id;
+			$this->tintuc->viewcount=$viewcount+1;
+			$this->tintuc->update();
 			$this->tintuc->where(' and backuped=0');
 			$this->tintuc->setLimit(5);
 			$this->tintuc->setPage(1);

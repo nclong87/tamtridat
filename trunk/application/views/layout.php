@@ -6,13 +6,10 @@
 <link rel="stylesheet" href="<?php echo BASE_PATH ?>/public/css/reset.css" type="text/css" media="screen">
 <link rel="stylesheet" href="<?php echo BASE_PATH ?>/public/css/style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="<?php echo BASE_PATH ?>/public/css/layout.css" type="text/css" media="screen">
-<link rel="stylesheet" href="<?php echo BASE_PATH ?>/public/css/paperclip.css" type="text/css" media="screen">
 <script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.min.js"></script>
 <script src="<?php echo BASE_PATH ?>/public/js/cufon-yui.js" type="text/javascript"></script>
 <script src="<?php echo BASE_PATH ?>/public/js/cufon-replace.js" type="text/javascript"></script>
-<script type="text/javascript" src="<?php echo BASE_PATH ?>/public/js/jquery.easing.1.3.js"></script> 
 <script src="<?php echo BASE_PATH ?>/public/js/FF-cash.js" type="text/javascript"></script>
-<script src="<?php echo BASE_PATH ?>/public/js/jquery.ellipsis.js" type="text/javascript"></script>
 <!--[if lt IE 7]>
 	<div style=' clear: both; text-align:center; position: relative;'>
 		<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/images/upgrade.jpg" border="0"  alt="" /></a>

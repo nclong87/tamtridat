@@ -22,7 +22,10 @@
 										</center>
 										</div>
 									</div>
-									<div class="description"><?php echo $duan['mota']?></div>
+									<div class="description">
+									<a title="<?php echo $duan['tenduan']?>" href="<?php echo $linkduan?>"><?php echo $duan['tenduan']?></a><br/><br/>
+									<?php echo $duan['mota']?>
+									</div>
 								</div>
 								<?php
 							}

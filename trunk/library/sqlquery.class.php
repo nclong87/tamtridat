@@ -248,19 +248,26 @@ class SQLQuery {
 	}
 
     /** Delete an Object **/
-	function delete() {
-		if ($this->id) {
-			$query = 'DELETE FROM '.$this->_table.' WHERE `id`=\''.mysql_real_escape_string($this->id).'\'';		
+	function delete($Ids = null) {
+		if($Ids==null) {
+			if ($this->id) {
+				$query = 'DELETE FROM '.$this->_table.' WHERE `id`=\''.mysql_real_escape_string($this->id).'\'';		
+				$this->_result = mysql_query($query, $this->_dbHandle);
+				$this->clear();
+				if ($this->_result == 0) {
+					/** Error Generation **/
+					return -1;
+			   }
+			} else {
+				/** Error Generation **/
+				return -1;
+			}
+		} else {
+			$query = 'DELETE FROM '.$this->_table.' WHERE `id` in ('.mysql_real_escape_string($Ids).')';
 			$this->_result = mysql_query($query, $this->_dbHandle);
 			$this->clear();
-			if ($this->_result == 0) {
-			    /** Error Generation **/
-				return -1;
-		   }
-		} else {
-			/** Error Generation **/
-			return -1;
 		}
+		
 	}
 	
 	/** Saves an Object i.e. Updates/Inserts Query **/

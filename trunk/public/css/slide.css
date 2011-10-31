@@ -123,7 +123,6 @@ width: 900px;
 */
 
 .caption {
-background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
 border-top: 1px solid #000000;
 color: #FFFFFF;
 font-family: fantasy;
@@ -136,4 +135,6 @@ position: absolute;
 text-shadow: none;
 width: 820px;
 z-index: 500;
+background:#000;
+background:rgba(0,0,0,.5);
 }
