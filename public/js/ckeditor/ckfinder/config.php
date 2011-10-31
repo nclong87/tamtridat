@@ -60,7 +60,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/userfiles/';
+//die(dirname(dirname(__FILE__)));
+$baseUrl = '/tamtridat/public/upload/userfiles/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the

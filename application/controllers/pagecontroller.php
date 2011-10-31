@@ -161,16 +161,18 @@ class PageController extends VanillaController {
 		}
 		
 	}    
-	function deletePage() {
+	function delete() {
 		$this->checkAdmin(true);
-		if(!isset($_GET["id"]))
-			die("ERROR_SYSTEM");
-		$id = $_GET["id"];
-		$this->page->id=$id;
-		if($this->page->delete()==-1) {
-			echo "ERROR_SYSTEM";
-		} else {
+		try {
+			if(!isset($_POST["ids"]))
+				die("ERROR_SYSTEM");
+			$ids = $_POST["ids"];
+			if($ids == '' || empty($ids))
+				die("ERROR_SYSTEM");
+			$this->page->delete($ids);
 			echo "DONE";
+		} catch (Exception $e) {
+			echo 'ERROR_SYSTEM';
 		}
 	}
 	function afterAction() {

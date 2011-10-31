@@ -38,7 +38,7 @@ class UtilController extends VanillaController {
 		 $this->$model =& new $model;
 	}
 	function index() {
-	
+		die(dirname(dirname(__FILE__)));
 	}
 	function setArrayType() {
 		$this->checkAdmin(false);
@@ -90,14 +90,6 @@ class UtilController extends VanillaController {
 		$this->loaiduan->orderBy('id','ASC');
 		$data = $this->loaiduan->search();
 		$cache->set("loaiduan",$data);
-		
-		$this->setModel("tintuc");
-		$this->tintuc->setLimit(2);
-		$this->tintuc->setPage(1);
-		$this->tintuc->where('AND backuped=0');
-		$this->tintuc->orderBy('datemodified','desc');
-		$data = $this->tintuc->search();
-		$cache->set("lastnews",$data);
 		
 		echo 'DONE';
 	}

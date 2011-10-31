@@ -24,16 +24,6 @@ p {margin-bottom:18px}
 .margin_right0 {
 	margin-right: 0 !important;
 }
-.truncate1 {
-	 white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    -moz-binding: url('ellipsis.xml#ellipsis');
-    display: block;
-
-}
 .reg {text-transform:uppercase}
 .fleft {float:left}
 .fright {float:right}
@@ -178,11 +168,6 @@ footer a {color:#00a9ff}
 .footer-logo strong {color:#00a9ff;text-transform:none;display:inline-block}
 .phone {display:inline-block;font-size:20px;line-height:1.2em;color:#9d9d9d;letter-spacing:-1px;padding-left:5px}
 .phone strong {color:#fff}
-.image_box {
-	border: 1px solid #A5A5A5;
-    padding: 1px;
-    width: 350px;
-}
 .label {
     background: none repeat scroll 0 0 white;
     font-size: 1.3em;
@@ -193,154 +178,12 @@ footer a {color:#00a9ff}
     top: 5px;
 }
 
-/* List */
-.first_text {
-	float:left;
-	height:auto !important;
-	min-height:110px;
-	padding:8px 5px 0 8px;
-	text-align:left;
-	width:100%;
-}
-.cat_box1 {
-	float:left;
-	padding-bottom:5px;
-	padding-right:5px;
-}
-div .cat_box1 .left {
-	float:left;
-}
-.vien2 {
-	display:block;
-	margin:0 auto;
-	overflow:hidden;
-	padding-left:2px;
-	padding-right:2px;
-	padding-top:2px;
-	text-align:center;
-	vertical-align:middle;
-	width:116px;
-}
-.boder-img {
-	background-color:#FFFFFF;
-	border:1px solid #A5A5A5;
-}
-.vien2 img {
-	width:116px;
-}
-.cat_box1 img {
-   width:230px;
-}
-.first_text .avata {
-	color:#00A9FF;
-	font-size:13px;
-	line-height:15px;
-	text-align:left;
-	font-weight: bold;
-}
-.first_text a:hover {
-	color: #F68618;
-}
-.cat_intro {
-	font-size:13px;
-	padding-top:14px;
-}
-/* End List*/
-
-/* Paging */
-.yt-uix-pager, .searchFooterBox div.yt-uix-pager {
-    border: medium none;
-    text-align: center;
-}
-.yt-uix-pager .yt-uix-pager-selected {
-    background: none repeat scroll 0 0 #DDDDDD;
-    border-color: #CCCCCC;
-    color: #000000;
-    cursor: default;
-    font-weight: bold;
-}
-.yt-uix-pager .yt-uix-button {
-    color: #00A9FF;
-	margin: 2px;
-}
-.yt-uix-button {
-    -moz-border-radius: 3px 3px 3px 3px;
-    background: -moz-linear-gradient(center top , #FFFFFF, #EFEFEF) repeat scroll 0 0 #F6F6F6;
-    border: 1px solid #CCCCCC;
-    color: #000000;
-    cursor: pointer;
-    height: 2.0833em;
-    overflow: visible;
-    padding: 0 0.5em;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-/* End Paging */
-
 #detail {
 	text-align: justify;
     width: 98%;
 	color: #222222;
 	padding:5px;
 }
-
-/* Tab */
-.container	
-{
-	background: url("../images/shadow_top.jpg") no-repeat scroll 0 0 transparent;
-	margin: auto;
-	overflow: hidden;
-	width: 100%;
-}
-.selector
-{
-	background: url(../images/selector.png);
-}			
-.hovering
-{
-	background: url(../images/selector.png);
-	opacity: 0.5;	
-}						
-.container .TabMenu
-{
-	position: relative;
-	top: 5px;
-	left: 2px;
-	z-index: 10;
-}
-.container .TabMenu span
-{
-	display: inline-block;
-	height: 77px;				
-	margin: 0px;
-	padding:0px;
-	cursor:pointer;
-}
-.container .ContentFrame
-{
-	overflow: hidden;
-	padding: 0px;
-	position: relative;
-	width: 100%;
-}			
-.container .ContentFrame .AllTabs
-{
-	overflow: hidden;
-	position: relative;
-}
-.container .ContentFrame .AllTabs .TabContent
-{
-	margin-right:0px;
-	text-align: justify;
-	float:left;
-	overflow:hidden;				
-}
-.container .footer {
-	background: url("../images/shadow_bottom.jpg") no-repeat scroll 0 0 transparent;
-	height: 20px;
-	width: 100%;
-}
-/* End Tab */
 
 /* Shadow Cros Browser*/
 .shadow {
@@ -401,30 +244,6 @@ div {
 }
 ul {
 	padding: 0;
-}
-.bds_id {
-	border-bottom: 1px solid #DCDCDC;
-	height: 18px;
-	padding-top: 2px;
-	width: 100%;
-	font-weight: bold;
-}
-.bds_name {
-	padding-top: 2px;
-	width: 100%;
-	text-align: left;
-}
-.bds_address {
-	padding-top: 2px;
-	width: 100%;
-	text-align: left;
-	border-bottom: 1px solid #DCDCDC;
-	padding-bottom: 5px;
-}
-.bds_price {
-	padding-top: 3px;
-	width: 100%;
-	text-align: center;
 }
 /* End View Detail */
 .normalRow {

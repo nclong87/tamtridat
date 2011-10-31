@@ -7,18 +7,16 @@
 			<div id="slides">
 				<div class="slides_container">
 					<?php
-					if(isset($datas)) {
-						foreach($datas as $data) {
-							$linkview = BASE_PATH.'/duan/view/'.$data['duan']['id'].'/'.$data['duan']['alias'];
-							?>
-							<div class="slide">
-								<a href="<?php echo $linkview?>" title="<?php echo $data['duan']['tenduan']?>"><img src="<?php echo BASE_PATH.$data['image']['fileurl']?>" width="860" height="350" alt="<?php echo $data['duan']['tenduan']?>"></a>
-								<div class="caption" style="bottom:0">
-									<p><span style="font-size:20px"><?php echo trimString($data['duan']['tenduan'],60)?></span></p>
-								</div>
+					foreach($cache->get('newprojects') as $data) {
+						$linkview = BASE_PATH.'/duan/view/'.$data['duan']['id'].'/'.$data['duan']['alias'];
+						?>
+						<div class="slide">
+							<a href="<?php echo $linkview?>" title="<?php echo $data['duan']['tenduan']?>"><img src="<?php echo BASE_PATH.$data['image']['fileurl']?>" width="860" height="350" alt="<?php echo $data['duan']['tenduan']?>"></a>
+							<div class="caption" style="bottom:0">
+								<p><span style="font-size:20px"><?php echo trimString($data['duan']['tenduan'],60)?></span></p>
 							</div>
-							<?php
-						}
+						</div>
+						<?php
 					}
 					?>
 				</div>
@@ -74,7 +72,8 @@
 		preload: true,
 		preloadImage: url('public/images/loading_slide.gif'),
 		play: 5000,
-		pause: 2500,
+		slideSpeed: 1000,
+		fadeSpeed: 0,
 		hoverPause: true,
 		animationStart: function(current){
 			$('.caption').animate({

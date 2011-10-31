@@ -13,6 +13,13 @@
 			  <a href="#" onclick="openForm()"><span class="toplinks">THÊM PAGE</span></a></span><br />
 		  </div>
 		</div>
+		<div id="top_icon" style="padding-top:0;">
+		  <div align="center">
+			<div><a href="#"><img src="<?php echo BASE_PATH ?>/public/images/icons/delete-icon.png" alt="delete-icon" width="26" height="26" border="0" /></a></div>
+					<span class="toplinks">
+			  <a href="#" onclick="doRemove()"><span class="toplinks">XÓA PAGE</span></a></span><br />
+		  </div>
+		</div>
 	</div>
 	<div style="float:left;width:100%">
 	<fieldset>
@@ -26,8 +33,9 @@
 						<td>Menu</td>
 						<td width="110px">Ngày cập nhật</td>
 						<td width="110px">Người cập nhật</td>
-						<td>Active</td>
-						<td width="40px">Xử lý</td>
+						<td>Status</td>
+						<td><input type="checkbox" onclick="doCheckAll(this)"/></td>
+						<td width="20px">Sửa</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,35 +51,36 @@
 	function loadListPages() {
 		oTable.fnDraw(false);
 	}
-	function deletePage() {
-		if(byId("page_id").value=="") {
-			alert("Vui lòng chọn page cần xóa!");
+	function doRemove() {
+		var checkeditems = $('#dataTable input:checked')
+                       .map(function() { return $(this).val() })
+                       .get()
+                       .join(",");
+		if(checkeditems=='') {
+			alert('Bạn chưa chọn dòng cần xóa!');
 			return;
 		}
-		if(!confirm("Bạn muốn xóa page này?"))
+		if(!confirm("Dữ liệu sẽ bị xóa sau khi bạn nhấn OK!"))
 			return;
-		byId("msg").innerHTML="";
-		block("#dialogPage #dialog");
+		block("#div_content");	
 		$.ajax({
-			type: "GET",
-			cache: false,
-			url : url("/page/deletePage&id="+byId("page_id").value),
+			type: "POST",
+			url: url("/page/delete&"),   
+			data: "ids=" + checkeditems,                                        
 			success: function(data){
-				unblock("#dialogPage #dialog");	
+				unblock("#div_content");
 				if(data == AJAX_ERROR_NOTLOGIN) {
 					location.href = url("/admin/login");
 					return;
 				}
 				if(data == AJAX_ERROR_SYSTEM) {
 					//Load luoi du lieu		
-					message('Thao tác bị lỗi!',0);	
+					alert('Thao tác bị lỗi!');	
 				} else {
-					closeDialog('#dialogPage');
-					loadListPages(1);
-					message("Xóa page thành công!",1);					
+					oTable.fnDraw(false);
 				}
 			},
-			error: function(data){ unblock("#dialogPage #dialog");alert (data);}	
+			error: function(data){ unblock("#div_content");alert (data);}
 		});
 	}
 	function doActive(id) {
@@ -121,6 +130,27 @@
 	function openForm(id) {
 		window.open(url('/page/form/'+id),'Page','resizable=yes,menubar=no,toolbar=no,status=no,width=1000');
 	}
+	function doCheck(_this) {
+		var tr = _this.parentNode.parentNode.parentNode;
+		if(_this.checked==true) {
+			tr.style.backgroundColor = 'orange';	
+		} else {
+			tr.style.backgroundColor = '';
+		}
+	}
+	function doCheckAll(_this) {
+		$("#dataTable input[type='checkbox']").each(function (){
+			$(this).attr('checked', _this.checked);
+			var tr = this.parentNode.parentNode.parentNode;
+			if(this.checked==true) {
+				tr.style.backgroundColor = 'orange';	
+			} else {
+				tr.style.backgroundColor = '';
+			}
+		});
+		
+		
+	}
 	$(document).ready(function(){				
 		$("#title_page").text("Quản Trị Page");
 		oTable = $('#dataTable').dataTable({
@@ -158,6 +188,11 @@
 								else
 									return 'N/A';
 							} 
+						},
+						{ 	"mDataProp": null,"bSortable": false,
+							"fnRender": function( oObj ) {
+								return '<center><input type="checkbox" value="'+page['id']+'" onclick="doCheck(this)"/></center>'; 
+							}
 						},
 						{ 	"mDataProp": null,"bSortable": false,
 							"fnRender": function( oObj ) {

@@ -22,7 +22,10 @@
 										</center>
 										</div>
 									</div>
-									<div class="description"><?php echo $tintuc['mota']?></div>
+									<div class="description">
+									<a title="<?php echo $tintuc['title']?>" href="<?php echo $linktintuc?>"><?php echo $tintuc['title']?></a><br/><br/>
+									<?php echo $tintuc['mota']?>
+									</div>
 								</div>
 								<?php
 							}

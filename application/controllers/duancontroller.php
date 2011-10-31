@@ -37,7 +37,18 @@ class DuanController extends VanillaController {
 	function setModel($model) {
 		 $this->$model =& new $model;
 	}
-	
+	function cache() {
+		$this->checkAdmin(true);
+		global $cache;
+		$this->setModel('duan');
+		$this->duan->showHasOne('image');
+		$this->duan->setLimit(5);
+		$this->duan->setPage(1);
+		$this->duan->where(" and backuped=0");
+		$this->duan->orderBy('dateupdate','desc');
+		$data = $this->duan->search('duan.id,alias,tenduan,fileurl');
+		$cache->set("newprojects",$data);
+	}	
 	function form($id=null) {
 		$this->checkAdmin(false);
 		if($id != null && $id != 0) {
@@ -82,6 +93,7 @@ class DuanController extends VanillaController {
 			$this->duan->id = $id;
 			$this->duan->backuped = 0;
 			$this->duan->save();
+			$this->cache();
 			echo "DONE";
 		}
 	}
@@ -91,6 +103,7 @@ class DuanController extends VanillaController {
 			$this->duan->id = $id;
 			$this->duan->backuped = 1;
 			$this->duan->save();
+			$this->cache();
 			echo "DONE";
 		}
 	}
@@ -132,22 +145,26 @@ class DuanController extends VanillaController {
 				$this->duan->valuesearch = remove_accents("$tenduan $thongtinchitiet $tenloaiduan $mota");
 				$this->duan->update();
 			}
+			$this->cache();
 			echo 'DONE';
 		} catch (Exception $e) {
 			echo 'ERROR_SYSTEM';
 		}
 		
 	}    
-	function deleteDuan() {
+	function delete() {
 		$this->checkAdmin(true);
-		if(!isset($_GET["id"]))
-			die("ERROR_SYSTEM");
-		$id = $_GET["id"];
-		$this->duan->id=$id;
-		if($this->duan->delete()==-1) {
-			echo "ERROR_SYSTEM";
-		} else {
+		try {
+			if(!isset($_POST["ids"]))
+				die("ERROR_SYSTEM");
+			$ids = $_POST["ids"];
+			if($ids == '' || empty($ids))
+				die("ERROR_SYSTEM");
+			$this->duan->delete($ids);
+			$this->cache();
 			echo "DONE";
+		} catch (Exception $e) {
+			echo 'ERROR_SYSTEM';
 		}
 	}
 	function view($id=null) {
