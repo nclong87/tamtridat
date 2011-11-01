@@ -27,7 +27,7 @@
 			<header>
 				<div class="row-1">
 					<h1>
-						<a class="logo" href="index.html">Tamtridat.com</a>
+						<a class="logo" href="#">Tamtridat.com</a>
 						<strong class="slog">CTY TNHH TƯ VẤN THIẾT KẾ XÂY DỰNG</strong>
 					</h1>
 					<form id="search-form" action="" method="post" >
@@ -76,7 +76,7 @@
 				</div>
 				<div class="row-bot">
 					<div class="aligncenter">
-						<p class="p0"><a href="http://www.yourcompany.com/" target="_blank">Bản quyền thuộc công ty ABC</a></p>
+						<p class="p0"><a href="http://www.tamtridat.com/" >Bản quyền thuộc công ty ABC</a></p>
 						Copyright © 2011<br>
 					</div>
 				</div>
