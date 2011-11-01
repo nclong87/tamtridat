@@ -1,7 +1,7 @@
 <div class="padding">
 					<div class="wrapper margin-bot">
 						<div class="col-3">
-							<h4 class="p2" style="border-bottom: 1px groove gray"><?php echo $tenloaiduan ?></h4>
+							<h4 class="p2" style="border-bottom: 1px groove #00A9FF"><?php echo $tenloaiduan ?></h4>
 							<div style="float: left; padding-bottom: 30px; width: 100%;">
 							<?php
 							foreach ($duans as $duan) {
@@ -54,7 +54,7 @@
 						</div>
 						<div class="col-4">
 							<div class="block-news">
-								<h4 class="p2" style="border-bottom: 1px groove gray">Loại Dự Án</h4>
+								<h4 class="p2" style="border-bottom: 1px groove #00A9FF">Loại Dự Án</h4>
 								<ul class="list-2">
 									<?php
 									foreach($loaiduans as $loaiduan) {
@@ -66,6 +66,11 @@
 									}
 									?>
 								</ul>
+							</div>
+							<div class="block-news" style="padding: 5px; text-align: center; margin-top: 10px;">
+								<h4 class="p2" style="border-bottom: 1px groove #00A9FF;text-align: left">Liên Hệ</h4>
+								<img alt="hotline" src="<?php echo BASE_PATH?>/public/images/hotline.jpg"/><br/>
+								<a class="sub-text" title="Chat with me!" href="ymsgr:sendim?nclong87"><img alt="nclong87" style="border:none" src="<?php echo BASE_PATH?>/public/images/onlineym.gif"/></a><br/>
 							</div>
 						</div>
 					</div>

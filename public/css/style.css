@@ -119,7 +119,12 @@ h6 {color:#0f0f0f;font-weight:normal;margin-bottom:5px}
 .box.third .numb {background:url(../images/numb-3.gif) 0 0 repeat-x #fabb0c}
 .numb {display:inline-block;padding:3px 7px 6px;font-size:40px;line-height:1.2em;letter-spacing:-2px;color:#fefefe;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px}
 *+html .numb {padding:6px 7px 4px}
-.block-news {padding: 20px 10px;border:1px solid #eaeaea;background:url(../images/block-news-tail.gif) 0 0 repeat-x #f9f9f9;border-radius:18px;-moz-border-radius:18px;-webkit-border-radius:18px}
+.block-news {
+-moz-border-radius: 18px 18px 18px 18px;
+background: url("../images/block-news-tail.gif") repeat-x scroll 0 0 #F9F9F9;
+border: 1px solid #00A9FF;
+padding: 20px 10px;
+}
 .button {display:block;width:43px;height:43px;text-indent:-5000px}
 .button-2 {-moz-border-radius: 8px 8px 8px 8px;background: url("../images/button-tail.gif") repeat-x scroll 0 0 #3C3C3C;color: #FEFEFE;display: inline-block;font-size: 15px;letter-spacing: -1px;line-height: 1.21em;padding: 4px 10px;}
 .button-2:hover {background:#3c3c3c}
