@@ -175,6 +175,7 @@ class TintucController extends VanillaController {
 			$this->tintuc->orderBy('viewcount','desc');
 			$lsthotnews = $this->tintuc->search();
 			$this->set("lsthotnews",$lsthotnews);
+			$this->set("title",$tintuc['tintuc']['title'].' - '.SITE_NAME);
 			$this->_template->render();
 		} else
 			error('Liên kết không tồn tại!');
@@ -205,6 +206,7 @@ class TintucController extends VanillaController {
 		$this->tintuc->orderBy('viewcount','desc');
 		$lsthotnews = $this->tintuc->search();
 		$this->set("lsthotnews",$lsthotnews);
+		$this->set("title",'Tin tức - '.SITE_NAME);
 		$this->_template->render();
 	}
 	
