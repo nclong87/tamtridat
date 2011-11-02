@@ -76,7 +76,7 @@
 				</div>
 				<div class="row-bot">
 					<div class="aligncenter">
-						<p class="p0"><a href="http://www.tamtridat.com/" >Bản quyền thuộc công ty ABC</a></p>
+						<p class="p0"><a href="http://www.tamtridat.com/" >Bản quyền thuộc công ty Tâm Trí Đạt</a></p>
 						Copyright © 2011<br>
 					</div>
 				</div>
