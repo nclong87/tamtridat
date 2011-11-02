@@ -42,6 +42,7 @@ class PageController extends VanillaController {
 			$this->page->id=$id;
             $page=$this->page->search();
 			$this->set("page",$page);
+			$this->set("title",$page['page']['title'].' - '.SITE_NAME);
 			$this->set('controller',$page['page']['menu_id']);
 			$this->_template->render();
 		}

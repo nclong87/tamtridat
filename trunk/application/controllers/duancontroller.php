@@ -175,6 +175,7 @@ class DuanController extends VanillaController {
 			$this->set("duan",$duan['duan']);
 			$this->set("image",$duan['image']);
 			$this->set("controller",'du-an');
+			$this->set("title",'Dự án : '.$duan['duan']['tenduan']);
 			$this->_template->render();
 		} else
 			error('Liên kết không tồn tại!');
@@ -199,6 +200,7 @@ class DuanController extends VanillaController {
 		$this->set('pagesnext',$ipagesnext);
 		$this->set('pageend',$totalPages);
 		$this->set("controller",'du-an');
+		$this->set("title",'Danh sách dự án - '.SITE_NAME);
 		$this->_template->render();
 	}
 	function loaiduan($loaiduan_id=null,$ipageindex=1) {
@@ -226,8 +228,10 @@ class DuanController extends VanillaController {
 			$loaiduans = $this->loaiduan->search();
 			$this->set("loaiduans",$loaiduans);
 			foreach ($loaiduans as $loaiduan) {
-				if($loaiduan['loaiduan']['id']==$loaiduan_id)
+				if($loaiduan['loaiduan']['id']==$loaiduan_id) {
 					$this->set("tenloaiduan",$loaiduan['loaiduan']['tenloaiduan']);
+					$this->set("title",'Loại dự án : '.$loaiduan['loaiduan']['tenloaiduan']);
+				}
 			}
 			$this->set("loaiduan_id",$loaiduan_id);
 			$this->set("controller",'du-an');
